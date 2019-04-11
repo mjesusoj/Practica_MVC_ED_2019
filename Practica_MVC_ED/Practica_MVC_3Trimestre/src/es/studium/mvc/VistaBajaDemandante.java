@@ -1,6 +1,7 @@
 package es.studium.mvc;
 
 import java.awt.Choice;
+import java.awt.Dialog;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -31,7 +32,9 @@ public class VistaBajaDemandante extends JFrame{
 		pnlBotones.add(btnCancelar);
 		add(pnlChoice, "Center");
 		add(pnlBotones, "South");
-		setSize(300,170);
+		
+		setSize(300,210);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}

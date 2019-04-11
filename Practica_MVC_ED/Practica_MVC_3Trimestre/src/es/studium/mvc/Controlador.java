@@ -9,11 +9,13 @@ public class Controlador implements WindowListener, ActionListener{
 	
 	VistaMenuPrincipal vmenuprincipal = null;
 	VistaBajaDemandante vbajademandante = null;
-	Modelo modelo = null;
+	VistaModificacionOferta vmodoferta = null;
+	VistaConfirmacionBaja vconfirmarbaja = null;
+	ModeloBaja modelobaja = null;
 	
-	public Controlador(VistaMenuPrincipal vmenuprincipal, Modelo modelo) {
+	public Controlador(VistaMenuPrincipal vmenuprincipal, ModeloBaja modelobaja) {
 		this.vmenuprincipal = vmenuprincipal;
-		this.modelo = modelo;
+		this.modelobaja = modelobaja;
 		
 		vmenuprincipal.mniDemandantesBaja.addActionListener(this);
 		vmenuprincipal.mniOfertasConsulta.addActionListener(this);
@@ -24,15 +26,41 @@ public class Controlador implements WindowListener, ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (this.vmenuprincipal.mniDemandantesBaja.equals(arg0.getSource())) {
+		if (vmenuprincipal.mniDemandantesBaja.equals(arg0.getSource())) {
 			// Hacer visible la otra vista
 			vmenuprincipal.setVisible(false);
 			vbajademandante = new VistaBajaDemandante();
+			
+			// Iniciar el método que carga los demandantes de la BD
+			ModeloBaja.insertarDemandanteBaja(vbajademandante);
 			
 			// Añadir los Actionlisteners y WindowListener
 			vbajademandante.btnCancelar.addActionListener(this);
 			vbajademandante.btnEliminar.addActionListener(this);
 			vbajademandante.addWindowListener(this);
+		}
+		
+		else if (vbajademandante.btnEliminar.equals(arg0.getSource())) {
+			vbajademandante.setVisible(false);
+			vconfirmarbaja = new VistaConfirmacionBaja();
+			
+			vconfirmarbaja.btnSi.addActionListener(this);
+			vconfirmarbaja.btnNo.addActionListener(this);
+			vconfirmarbaja.addWindowListener(this);
+		}
+		
+		else if (vconfirmarbaja.btnSi.equals(arg0.getSource())) {
+			ModeloBaja.eliminarDemandante(vbajademandante, vbajademandante);
+		}
+		
+		else if (vconfirmarbaja.btnNo.equals(arg0.getSource())) {
+			vconfirmarbaja.setVisible(false);
+			vbajademandante.setVisible(true);
+		}
+		
+		else if (vmenuprincipal.mniOfertasModificacion.equals(arg0.getSource())) {
+			vmenuprincipal.setVisible(false);
+			vmodoferta = new VistaModificacionOferta();
 		}
 	}
 
@@ -51,6 +79,11 @@ public class Controlador implements WindowListener, ActionListener{
 		else if(vbajademandante.isActive()) {
 			vbajademandante.setVisible(false);
 			vmenuprincipal.setVisible(true);
+		}
+		
+		else if(vconfirmarbaja.isActive()) {
+			vconfirmarbaja.setVisible(false);
+			vbajademandante.setVisible(true);
 		}
 	}
 
