@@ -11,6 +11,7 @@ public class Controlador implements WindowListener, ActionListener{
 	VistaBajaDemandante vbajademandante = null;
 	VistaModificacionOferta vmodoferta = null;
 	VistaConfirmacionBaja vconfirmarbaja = null;
+	VistaConsultaOfertas vconsultaofertas = null;
 	ModeloBaja modelobaja = null;
 	
 	public Controlador(VistaMenuPrincipal vmenuprincipal, ModeloBaja modelobaja) {
@@ -35,9 +36,14 @@ public class Controlador implements WindowListener, ActionListener{
 			ModeloBaja.insertarDemandanteBaja(vbajademandante);
 			
 			// Añadir los Actionlisteners y WindowListener
-			vbajademandante.btnCancelar.addActionListener(this);
 			vbajademandante.btnEliminar.addActionListener(this);
+			vbajademandante.btnCancelar.addActionListener(this);
 			vbajademandante.addWindowListener(this);
+		}
+		
+		else if(vmenuprincipal.mniOfertasConsulta.equals(arg0.getSource())) {
+			vmenuprincipal.setVisible(false);
+			vconsultaofertas = new VistaConsultaOfertas();
 		}
 		
 		else if (vbajademandante.btnEliminar.equals(arg0.getSource())) {
@@ -48,9 +54,14 @@ public class Controlador implements WindowListener, ActionListener{
 			vconfirmarbaja.btnNo.addActionListener(this);
 			vconfirmarbaja.addWindowListener(this);
 		}
+
+		else if (vbajademandante.btnCancelar.equals(arg0.getSource())){
+			vbajademandante.setVisible(false);
+			vmenuprincipal.setVisible(true);
+		}
 		
 		else if (vconfirmarbaja.btnSi.equals(arg0.getSource())) {
-			ModeloBaja.eliminarDemandante(vbajademandante, vbajademandante);
+			ModeloBaja.eliminarDemandante(vbajademandante);
 		}
 		
 		else if (vconfirmarbaja.btnNo.equals(arg0.getSource())) {

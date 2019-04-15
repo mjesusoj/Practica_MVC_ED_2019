@@ -8,11 +8,12 @@ import java.sql.Statement;
 
 public class ModeloBaja {
 
+	static String driver = "com.mysql.jdbc.Driver";
+	static String url = "jdbc:mysql://localhost:3306/practicamvc?autoReconnect=true&useSSL=false";
+	static String login = "root";
+	static String password = "Studium2018;";
+	
 	public static void insertarDemandanteBaja(VistaBajaDemandante vbajademantante) {
-		String driver = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://localhost:3306/practicamvc?autoReconnect=true&useSSL=false";
-		String login = "root";
-		String password = "Studium2018;";
 		String sentencia = "SELECT idDemandante, nombreDemandante, apellidosDemandante, dniDemandante FROM demandantes;";
 		Connection connection = null;
 		Statement statement = null;
@@ -61,12 +62,7 @@ public class ModeloBaja {
 		}
 	}
 	
-	public static void eliminarDemandante(VistaBajaDemandante informativo, VistaBajaDemandante vbajademantante) {
-		String driver = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://localhost:3306/practicamvc?autoReconnect=true&useSSL=false";
-		String login = "root";
-		String password = "Studium2018;";
-		String sentencia = null;
+	public static void eliminarDemandante(VistaBajaDemandante vbajademantante) {
 		Connection connection = null;
 		Statement statement = null;
 		
@@ -76,12 +72,11 @@ public class ModeloBaja {
 			Class.forName(driver);
 			//Establecer la conexión con la BD Empresa
 			connection = DriverManager.getConnection(url, login, password);
-			//Crear una sentencia
-			statement = connection.createStatement();
-			String [] escogerdato = vbajademantante.chcElegir.getSelectedItem().split(" "+"-"+" "+" ");
+			statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			String [] escogerdato = vbajademantante.chcElegir.getSelectedItem().split(" "+"-"+" ");
 			int idDemandante = Integer.parseInt(escogerdato[0]);
-			sentencia = "DELETE FROM demandantes WHERE ('idDemandante' ='"+idDemandante+"')";
-			statement.executeUpdate(sentencia);
+			System.out.println(idDemandante);
+			statement.executeUpdate("DELETE FROM demandantes WHERE idDemandante = '"+idDemandante+"';");
 		}
 		
 		catch (ClassNotFoundException cnfe)

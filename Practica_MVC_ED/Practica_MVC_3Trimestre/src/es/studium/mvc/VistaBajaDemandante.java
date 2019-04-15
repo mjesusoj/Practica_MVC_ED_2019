@@ -1,7 +1,6 @@
 package es.studium.mvc;
 
 import java.awt.Choice;
-import java.awt.Dialog;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;

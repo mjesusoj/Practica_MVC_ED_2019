@@ -39,6 +39,7 @@ public class VistaMenuPrincipal extends JFrame{
 		menuGestion.add(mniGestionAlta);
 		
 		setSize(400,200);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
