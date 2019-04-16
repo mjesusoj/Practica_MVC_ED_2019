@@ -24,7 +24,7 @@ public class VistaModificacionOferta extends JFrame{
 		add(chcElegir);
 		add(btnEditar);
 		add(btnCancelar);
-		setSize(200,300);
+		setSize(300,250);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);
