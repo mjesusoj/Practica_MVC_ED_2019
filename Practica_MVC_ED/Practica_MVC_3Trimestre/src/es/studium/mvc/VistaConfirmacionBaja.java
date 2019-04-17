@@ -1,28 +1,32 @@
 package es.studium.mvc;
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class VistaConfirmacionBaja extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 
 	// Componentes Diálogo
-	JLabel eliminarDemandante = new JLabel("¿Seguro/a de eliminar a XXXXXXXX?");
+	JLabel eliminarDemandante = new JLabel();
 	JButton btnSi = new JButton("Sí");
 	JButton btnNo = new JButton("No");
+	
+	// Paneles
+	JPanel panelCentral = new JPanel();
 	
 	VistaConfirmacionBaja()
 	{
 		setTitle("¿Seguro/a?");
-		setLayout(new FlowLayout());
-		add(eliminarDemandante);
-		add(btnSi);
-		add(btnNo);
-		setSize(250,150);
+		panelCentral.add(eliminarDemandante);
+		panelCentral.add(btnSi);
+		panelCentral.add(btnNo);
+		add(panelCentral, BorderLayout.CENTER);
+		setSize(370,100);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);

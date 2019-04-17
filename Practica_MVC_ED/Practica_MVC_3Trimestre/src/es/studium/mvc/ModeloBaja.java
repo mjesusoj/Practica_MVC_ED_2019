@@ -13,7 +13,7 @@ public class ModeloBaja {
 	static String login = "root";
 	static String password = "Studium2018;";
 	
-	public static void insertarDemandanteBaja(VistaBajaDemandante vbajademantante) {
+	public static void insertarDemandanteBaja(VistaBajaDemandante vbajademandante) {
 		String sentencia = "SELECT idDemandante, nombreDemandante, apellidosDemandante, dniDemandante FROM demandantes;";
 		Connection connection = null;
 		Statement statement = null;
@@ -35,7 +35,7 @@ public class ModeloBaja {
 				String nombreDemandante = rs.getString("nombreDemandante");
 				String apellidosDemandante = rs.getString("apellidosDemandante");
 				String dniDemandante = rs.getString("dniDemandante");
-				vbajademantante.chcElegir.add(idDemandante+" "+"-"+" "+nombreDemandante+" "+apellidosDemandante+" "+ "("+dniDemandante+")");
+				vbajademandante.chcElegir.add(idDemandante+" "+"-"+" "+nombreDemandante+" "+apellidosDemandante+" "+ "("+dniDemandante+")");
 			}
 		}
 		catch (ClassNotFoundException cnfe)
@@ -61,6 +61,13 @@ public class ModeloBaja {
 			}
 		}
 	}
+	
+	public static void demandanteaeliminar(VistaBajaDemandante vbajademandante, VistaConfirmacionBaja vconfirmarbaja) {
+		String[] demandanteelegido = vbajademandante.chcElegir.getSelectedItem().split(" "+"-"+" ");
+		String demandante = (demandanteelegido[1]);
+		// Guardar en el label el cliente que se ha seleccionado.
+		vconfirmarbaja.eliminarDemandante.setText("¿Seguro/a de eliminar a" + " " + demandante +"?");
+	} 
 	
 	public static void eliminarDemandante(VistaBajaDemandante vbajademantante) {
 		Connection connection = null;
