@@ -10,11 +10,15 @@ public class Controlador implements WindowListener, ActionListener{
 	VistaMenuPrincipal vmenuprincipal = null;
 	VistaBajaDemandante vbajademandante = null;
 	VistaConfirmacionBaja vconfirmarbaja = null;	
-	ModeloBaja modelobaja = null;
+	Modelo modelo = null;
 	
-	public Controlador(VistaMenuPrincipal vmenuprincipal, ModeloBaja modelobaja) {
+	VistaModificacionOferta vmodoferta = null;
+	VistaEdicionOferta vedicionoferta = null;
+	VistaConsultaOfertas vconsultaofertas = null;
+	
+	public Controlador(VistaMenuPrincipal vmenuprincipal, Modelo modelo) {
 		this.vmenuprincipal = vmenuprincipal;
-		this.modelobaja = modelobaja;
+		this.modelo = modelo;
 		
 		vmenuprincipal.mniDemandantesBaja.addActionListener(this);
 		vmenuprincipal.mniOfertasModificacion.addActionListener(this);
@@ -31,19 +35,36 @@ public class Controlador implements WindowListener, ActionListener{
 			vbajademandante = new VistaBajaDemandante();
 			
 			// Iniciar el método que carga los demandantes de la BD
-			ModeloBaja.insertarDemandanteBaja(vbajademandante);
+			Modelo.insertarDemandanteBaja(vbajademandante);
 			
-			// Añadir los Actionlisteners y WindowListener
+			// Añadir los escuchadores
 			vbajademandante.btnEliminar.addActionListener(this);
 			vbajademandante.btnCancelar.addActionListener(this);
 			vbajademandante.addWindowListener(this);
+		}
+		
+		else if(vmenuprincipal.mniOfertasModificacion.equals(arg0.getSource())) {
+			vmenuprincipal.setVisible(false);
+			vmodoferta = new VistaModificacionOferta();
+			
+			// Iniciar método de la clase ModeloOferta
+			ModeloOferta.cargarOferta(vmodoferta);
+			
+			vmodoferta.btnEditar.addActionListener(this);
+			vmodoferta.btnCancelar.addActionListener(this);
+			vmodoferta.addWindowListener(this);
+		}
+		
+		else if(vmenuprincipal.mniOfertasConsulta.equals(arg0.getSource())) {
+			vmenuprincipal.setVisible(false);
+			vconsultaofertas = new VistaConsultaOfertas();
 		}
 		
 		else if (vbajademandante.btnEliminar.equals(arg0.getSource())) {
 			vbajademandante.setVisible(false);
 			vconfirmarbaja = new VistaConfirmacionBaja();
 			// Llamar al método para saber que demandante se ha elegido.
-			ModeloBaja.demandanteaeliminar(vbajademandante, vconfirmarbaja);
+			Modelo.demandanteaeliminar(vbajademandante, vconfirmarbaja);
 			
 			vconfirmarbaja.btnSi.addActionListener(this);
 			vconfirmarbaja.btnNo.addActionListener(this);
@@ -56,7 +77,7 @@ public class Controlador implements WindowListener, ActionListener{
 		}
 		
 		else if (vconfirmarbaja.btnSi.equals(arg0.getSource())) {
-			ModeloBaja.eliminarDemandante(vbajademandante);
+			Modelo.eliminarDemandante(vbajademandante, vconfirmarbaja);
 		}
 		
 		else if (vconfirmarbaja.btnNo.equals(arg0.getSource())) {
@@ -64,9 +85,16 @@ public class Controlador implements WindowListener, ActionListener{
 			vbajademandante.setVisible(true);
 		}
 		
-		else if(vmenuprincipal.mniOfertasModificacion.equals(arg0.getSource())) {
-			vmenuprincipal.setVisible(false);
-			new ControladorOferta(vmenuprincipal, null);
+		else if(vmodoferta.btnEditar.equals(arg0.getSource())) {
+			vmodoferta.setVisible(false);
+			vedicionoferta = new VistaEdicionOferta();
+			
+			ModeloOferta.cargarcomponentesEdicion(vedicionoferta, vmodoferta);
+		}
+		
+		else if(vmodoferta.btnCancelar.equals(arg0.getSource())) {
+			vmodoferta.setVisible(false);
+			vmenuprincipal.setVisible(true);
 		}
 	}
 

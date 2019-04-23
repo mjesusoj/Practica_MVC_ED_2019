@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ModeloBaja {
+public class Modelo {
 
 	static String driver = "com.mysql.jdbc.Driver";
 	static String url = "jdbc:mysql://localhost:3306/practicamvc?autoReconnect=true&useSSL=false";
@@ -69,7 +69,7 @@ public class ModeloBaja {
 		vconfirmarbaja.eliminarDemandante.setText("¿Seguro/a de eliminar a" + " " + demandante +"?");
 	} 
 	
-	public static void eliminarDemandante(VistaBajaDemandante vbajademantante) {
+	public static void eliminarDemandante(VistaBajaDemandante vbajademantante, VistaConfirmacionBaja vconfirmarbaja) {
 		Connection connection = null;
 		Statement statement = null;
 		
