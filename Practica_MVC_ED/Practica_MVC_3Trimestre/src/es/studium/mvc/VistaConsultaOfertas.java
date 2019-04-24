@@ -12,13 +12,15 @@ public class VistaConsultaOfertas extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 
+	JTable tabla = new JTable();
+	
 	JButton btnAceptar = new JButton("Aceptar");
 	
 	VistaConsultaOfertas()
 	{
 		setTitle("Consulta Ofertas");
 		setLayout(new FlowLayout());
-		JTable tabla = new JTable(datosFila, nombreColumnas);
+		tabla = new JTable(datosFila, nombreColumnas);
 		add(new JScrollPane(tabla), BorderLayout.CENTER);
 		add(btnAceptar);
 		setSize(500,200);

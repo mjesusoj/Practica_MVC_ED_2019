@@ -25,7 +25,7 @@ public class ControladorOferta implements WindowListener, ActionListener{
 			vmodoferta = new VistaModificacionOferta();
 			
 			// Iniciar método de la clase ModeloOferta
-			ModeloOferta.cargarOferta(vmodoferta);
+			//ModeloOferta.cargarOferta(vmodoferta);
 			
 			vmodoferta.btnEditar.addActionListener(this);
 			vmodoferta.btnCancelar.addActionListener(this);
@@ -36,7 +36,7 @@ public class ControladorOferta implements WindowListener, ActionListener{
 			vmodoferta.setVisible(false);
 			vedicionoferta = new VistaEdicionOferta();
 			
-			ModeloOferta.cargarcomponentesEdicion(vedicionoferta, vmodoferta);
+			//ModeloOferta.cargarcomponentesEdicion(vedicionoferta, vmodoferta);
 		}
 		
 		else if(vmodoferta.btnCancelar.equals(arg0.getSource())) {
