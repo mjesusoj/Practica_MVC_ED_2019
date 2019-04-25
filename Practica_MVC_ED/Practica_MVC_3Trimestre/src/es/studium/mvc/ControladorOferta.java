@@ -7,46 +7,38 @@ import java.awt.event.WindowListener;
 
 public class ControladorOferta implements WindowListener, ActionListener{
 
-	VistaMenuPrincipal vmenuprincipal = null;
 	VistaModificacionOferta vmodoferta = null;
 	VistaEdicionOferta vedicionoferta = null;
-	VistaConsultaOfertas vconsultaofertas = null;
-	ModeloOferta modeloferta = null;
+	VistaConsultaOferta vconsultaofertas = null;
+	Modelo modelo = null;
 	
-	public ControladorOferta(VistaMenuPrincipal vmenuprincipal, ModeloOferta modeloferta) {
-		this.vmenuprincipal = vmenuprincipal;
-		this.modeloferta = modeloferta;
+	public ControladorOferta(VistaModificacionOferta vmodoferta, VistaConsultaOferta vconsultaofertas, Modelo modelo) {
+		this.modelo = modelo;
+		this.vmodoferta = vmodoferta;
+		this.vconsultaofertas = vconsultaofertas;
+		vmodoferta.btnEditar.addActionListener(this);
+		vmodoferta.btnCancelar.addActionListener(this);
+		vmodoferta.addWindowListener(this);
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		if(vmenuprincipal.mniOfertasModificacion.equals(arg0.getSource())) {
-			vmenuprincipal.setVisible(false);
-			vmodoferta = new VistaModificacionOferta();
-			
-			// Iniciar método de la clase ModeloOferta
-			//ModeloOferta.cargarOferta(vmodoferta);
-			
-			vmodoferta.btnEditar.addActionListener(this);
-			vmodoferta.btnCancelar.addActionListener(this);
-			vmodoferta.addWindowListener(this);
-		}
-		
-		else if(vmodoferta.btnEditar.equals(arg0.getSource())) {
+	public void actionPerformed(ActionEvent arg0) {			
+		if(vmodoferta.btnEditar.equals(arg0.getSource())) {
 			vmodoferta.setVisible(false);
-			vedicionoferta = new VistaEdicionOferta();
-			
-			//ModeloOferta.cargarcomponentesEdicion(vedicionoferta, vmodoferta);
+			VistaEdicionOferta vedicionoferta1 = new VistaEdicionOferta();
+			vedicionoferta = vedicionoferta1;
+				
+			Modelo.cargarcomponentesEdicion(vedicionoferta, vmodoferta);
+				
+			// Listeners
+			vedicionoferta.btnActualizar.addActionListener(this);
+			vedicionoferta.btnCancelar.addActionListener(this);
+			vedicionoferta.addWindowListener(this);
 		}
 		
-		else if(vmodoferta.btnCancelar.equals(arg0.getSource())) {
+		if(vmodoferta.btnCancelar.equals(arg0.getSource())) {
 			vmodoferta.setVisible(false);
-			vmenuprincipal.setVisible(true);
-		}
-		
-		else if(vmenuprincipal.mniOfertasConsulta.equals(arg0.getSource())) {
-			vmenuprincipal.setVisible(false);
-			vconsultaofertas = new VistaConsultaOfertas();
+			new VistaMenuPrincipal();
 		}
 	}
 
@@ -60,7 +52,12 @@ public class ControladorOferta implements WindowListener, ActionListener{
 	public void windowClosing(WindowEvent arg0) {
 		if(vmodoferta.isActive()) {
 			vmodoferta.setVisible(false);
-			vmenuprincipal.setVisible(true);
+			new VistaMenuPrincipal();
+		}
+		
+		else if(vedicionoferta.isActive()) {
+			vedicionoferta.setVisible(false);
+			vmodoferta.setVisible(true);
 		}
 	}
 	

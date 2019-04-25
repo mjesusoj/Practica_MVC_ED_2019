@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class VistaConsultaOfertas extends JFrame{
+public class VistaConsultaOferta extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,7 @@ public class VistaConsultaOfertas extends JFrame{
 	
 	JButton btnAceptar = new JButton("Aceptar");
 	
-	VistaConsultaOfertas()
+	VistaConsultaOferta()
 	{
 		setTitle("Consulta Ofertas");
 		setLayout(new FlowLayout());
