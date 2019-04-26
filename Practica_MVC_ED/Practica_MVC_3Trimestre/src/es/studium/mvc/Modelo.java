@@ -16,7 +16,7 @@ public class Modelo {
 	static String login = "root";
 	static String password = "Studium2018;";
 	
-	public static void insertarDemandanteBaja(VistaBajaDemandante vbajademandante) {
+	public void insertarDemandanteBaja(VistaBajaDemandante vbajademandante) {
 		String sentencia = "SELECT idDemandante, nombreDemandante, apellidosDemandante, dniDemandante FROM demandantes;";
 		Connection connection = null;
 		Statement statement = null;
@@ -65,14 +65,14 @@ public class Modelo {
 		}
 	}
 	
-	public static void demandanteaeliminar(VistaBajaDemandante vbajademandante, VistaConfirmacionBaja vconfirmarbaja) {
+	public void demandanteaeliminar(VistaBajaDemandante vbajademandante, VistaConfirmacionBaja vconfirmarbaja) {
 		String[] demandanteelegido = vbajademandante.chcElegir.getSelectedItem().split(" "+"-"+" ");
 		String demandante = (demandanteelegido[1]);
 		// Guardar en el label el cliente que se ha seleccionado.
 		vconfirmarbaja.eliminarDemandante.setText("¿Seguro/a de eliminar a" + " " + demandante +"?");
 	} 
 	
-	public static void eliminarDemandante(VistaBajaDemandante vbajademantante, VistaConfirmacionBaja vconfirmarbaja) {
+	public void eliminarDemandante(VistaBajaDemandante vbajademantante, VistaConfirmacionBaja vconfirmarbaja) {
 		Connection connection = null;
 		Statement statement = null;
 		
@@ -113,7 +113,7 @@ public class Modelo {
 		}
 	}
 	
-	public static void cargarOferta(VistaModificacionOferta vmodoferta) {
+	public void cargarOferta(VistaModificacionOferta vmodoferta) {
 
 		String sentencia = "SELECT * FROM ofertas;";
 		Connection connection = null;
@@ -164,7 +164,7 @@ public class Modelo {
 		}
 	}
 
-	public static void cargarcomponentesEdicion(VistaEdicionOferta vedicionoferta, VistaModificacionOferta vmodoferta) {
+	public void cargarcomponentesEdicion(VistaEdicionOferta vedicionoferta, VistaModificacionOferta vmodoferta) {
 		String [] oferta = vmodoferta.chcElegir.getSelectedItem().split("-" + " ");  
 		String [] escoger = vmodoferta.chcElegir.getSelectedItem().split(" ");  
 		String fechaFinOferta = escoger[3].replace("|", "");
@@ -230,7 +230,7 @@ public class Modelo {
 		return null;
 	}
 	
-	public static void cargaridOfertaAlta(VistaAltaAsignacion valtasignacion) {
+	public void cargaridOfertaAlta(VistaAltaAsignacion valtasignacion) {
 
 		String sentencia = "SELECT idOferta FROM ofertas;";
 		Connection connection = null;
@@ -280,7 +280,7 @@ public class Modelo {
 		}
 	}
 	
-	public static void cargaridDemandanteAlta(VistaAltaAsignacion valtasignacion) {
+	public void cargaridDemandanteAlta(VistaAltaAsignacion valtasignacion) {
 
 		String sentencia = "SELECT idDemandante FROM demandantes;";
 		Connection connection = null;
@@ -330,7 +330,7 @@ public class Modelo {
 		}
 	}
 	
-	public static void insertarasignacion(VistaAltaAsignacion valtasignacion) {
+	public void insertarasignacion(VistaAltaAsignacion valtasignacion) {
 		Connection connection = null;
 		Statement statement = null;
 
@@ -376,7 +376,7 @@ public class Modelo {
 		return fecha;
 	}
 	
-	public static String fechamericana() {
+	public String fechamericana() {
 		Date date = new Date();
 		DateFormat dateFormatAmerican = new SimpleDateFormat("yyyy/MM/dd");
 		String fechamericana = dateFormatAmerican.format(date);

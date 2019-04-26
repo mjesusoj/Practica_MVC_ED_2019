@@ -28,23 +28,23 @@ public class Controlador implements WindowListener, ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (vmenuprincipal.mniDemandantesBaja.equals(arg0.getSource())) {
-			// Hacer visible la otra vista
 			vmenuprincipal.setVisible(false);
 			
-			VistaBajaDemandante vbajaDemandante = new VistaBajaDemandante();
+			VistaBajaDemandante vbajademandante = new VistaBajaDemandante();
+			
+			new ControladorBaja(vbajademandante, modelo);
 			
 			// Iniciar el método que carga los demandantes de la BD
-			Modelo.insertarDemandanteBaja(vbajademandante);
-			new ControladorBaja(vbajaDemandante, modelo);
+			modelo.insertarDemandanteBaja(vbajademandante);
 		}
 		
 		else if (vmenuprincipal.mniOfertasModificacion.equals(arg0.getSource())) {
 			vmenuprincipal.setVisible(false);
-			VistaModificacionOferta vmodoferta1 = new VistaModificacionOferta();
+			VistaModificacionOferta vmodoferta = new VistaModificacionOferta();
 			
+			new ControladorOferta(vmodoferta, null, modelo);
 			// Iniciar método de la clase ModeloOferta
-			Modelo.cargarOferta(vmodoferta);
-			new ControladorOferta(vmodoferta1, null, modelo);
+			modelo.cargarOferta(vmodoferta);
 		}
 		
 		else if (vmenuprincipal.mniOfertasConsulta.equals(arg0.getSource())) {
@@ -60,8 +60,8 @@ public class Controlador implements WindowListener, ActionListener{
 			new ControladorAlta(valtasignacion, modelo);
 			
 			// Cargar los componentes desde la BD
-			Modelo.cargaridOfertaAlta(valtasignacion);
-			Modelo.cargaridDemandanteAlta(valtasignacion);
+			modelo.cargaridOfertaAlta(valtasignacion);
+			modelo.cargaridDemandanteAlta(valtasignacion);
 		}
 	}
 

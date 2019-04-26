@@ -7,14 +7,14 @@ import java.awt.event.WindowListener;
 
 public class ControladorBaja implements WindowListener, ActionListener{
 
-	VistaBajaDemandante vbajademandante = new VistaBajaDemandante();
-	VistaConfirmacionBaja vconfirmarbaja;
-	Modelo modelo;
+	VistaBajaDemandante vbajademandante = null;
+	VistaConfirmacionBaja vconfirmarbaja = null;
+	Modelo modelo = null;
 
-	public ControladorBaja(VistaBajaDemandante valtasignacion, Modelo modelo) {
-		this.vbajademandante = valtasignacion;
+	public ControladorBaja(VistaBajaDemandante vbajademandante, Modelo modelo) {
+		this.vbajademandante = vbajademandante;
 		this.modelo = modelo;
-
+		
 		vbajademandante.btnEliminar.addActionListener(this);
 		vbajademandante.btnCancelar.addActionListener(this);
 		vbajademandante.addWindowListener(this);
@@ -24,11 +24,10 @@ public class ControladorBaja implements WindowListener, ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		if (vbajademandante.btnEliminar.equals(arg0.getSource())) {
 			vbajademandante.setVisible(false);
-			VistaConfirmacionBaja vconfirmarbaja1 = new VistaConfirmacionBaja();
-			vconfirmarbaja = vconfirmarbaja1;
+			VistaConfirmacionBaja vconfirmarbaja = new VistaConfirmacionBaja();
 
 			// Llamar al método para saber que demandante se ha elegido.
-			Modelo.demandanteaeliminar(vbajademandante, vconfirmarbaja);
+			modelo.demandanteaeliminar(vbajademandante, vconfirmarbaja);
 
 			vconfirmarbaja.btnSi.addActionListener(this);
 			vconfirmarbaja.btnNo.addActionListener(this);
@@ -41,7 +40,7 @@ public class ControladorBaja implements WindowListener, ActionListener{
 		}
 
 		else if (vconfirmarbaja.btnSi.equals(arg0.getSource())) {
-			Modelo.eliminarDemandante(vbajademandante, vconfirmarbaja);
+			modelo.eliminarDemandante(vbajademandante, vconfirmarbaja);
 		}
 
 		else if (vconfirmarbaja.btnNo.equals(arg0.getSource())) {
@@ -51,22 +50,16 @@ public class ControladorBaja implements WindowListener, ActionListener{
 	}
 
 	@Override
-	public void windowActivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void windowActivated(WindowEvent arg0) {}
 
 	@Override
-	public void windowClosed(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void windowClosed(WindowEvent arg0) {}
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		if (vbajademandante.isActive()) {
-			vbajademandante.setVisible(false);
-			new VistaMenuPrincipal();
+			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
+			new Controlador(vmenuprincipal, modelo);
 		}	
 			
 		else if(vconfirmarbaja.isActive()) {
@@ -76,26 +69,14 @@ public class ControladorBaja implements WindowListener, ActionListener{
 	}
 
 	@Override
-	public void windowDeactivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void windowDeactivated(WindowEvent arg0) {}
 
 	@Override
-	public void windowDeiconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void windowDeiconified(WindowEvent arg0) {}
 
 	@Override
-	public void windowIconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void windowIconified(WindowEvent arg0) {}
 
 	@Override
-	public void windowOpened(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void windowOpened(WindowEvent arg0) {}
 }
