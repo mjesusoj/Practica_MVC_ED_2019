@@ -72,7 +72,7 @@ public class Modelo {
 		vconfirmarbaja.eliminarDemandante.setText("¿Seguro/a de eliminar a" + " " + demandante +"?");
 	} 
 	
-	public void eliminarDemandante(VistaBajaDemandante vbajademantante, VistaConfirmacionBaja vconfirmarbaja) {
+	public void eliminarDemandante(VistaBajaDemandante vbajademandante, VistaConfirmacionBaja vconfirmarbaja) {
 		Connection connection = null;
 		Statement statement = null;
 		
@@ -83,7 +83,7 @@ public class Modelo {
 			//Establecer la conexión con la BD Empresa
 			connection = DriverManager.getConnection(url, login, password);
 			statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String [] escogerdato = vbajademantante.chcElegir.getSelectedItem().split(" "+"-"+" ");
+			String [] escogerdato = vbajademandante.chcElegir.getSelectedItem().split(" "+"-"+" ");
 			int idDemandante = Integer.parseInt(escogerdato[0]);
 			System.out.println(idDemandante);
 			statement.executeUpdate("DELETE FROM demandantes WHERE idDemandante = '"+idDemandante+"';");

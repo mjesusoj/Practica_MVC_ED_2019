@@ -28,21 +28,20 @@ public class ControladorBaja implements WindowListener, ActionListener{
 
 			// Llamar al método para saber que demandante se ha elegido.
 			modelo.demandanteaeliminar(vbajademandante, vconfirmarbaja);
-
 			vconfirmarbaja.btnSi.addActionListener(this);
 			vconfirmarbaja.btnNo.addActionListener(this);
 			vconfirmarbaja.addWindowListener(this);
 		}
 
 		else if (vbajademandante.btnCancelar.equals(arg0.getSource())){
-			vbajademandante.setVisible(false);
-			new VistaMenuPrincipal();
+			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
+			new Controlador(vmenuprincipal, modelo);
 		}
 
-		else if (vconfirmarbaja.btnSi.equals(arg0.getSource())) {
+		if (vconfirmarbaja.btnSi.equals(arg0.getSource())) {
 			modelo.eliminarDemandante(vbajademandante, vconfirmarbaja);
 		}
-
+	
 		else if (vconfirmarbaja.btnNo.equals(arg0.getSource())) {
 			vconfirmarbaja.setVisible(false);
 			vbajademandante.setVisible(true);
