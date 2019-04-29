@@ -26,7 +26,7 @@ public class VistaConfirmacionBaja extends JFrame{
 		panelCentral.add(btnSi);
 		panelCentral.add(btnNo);
 		add(panelCentral, BorderLayout.CENTER);
-		setSize(400,100);
+		setSize(370,100);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);

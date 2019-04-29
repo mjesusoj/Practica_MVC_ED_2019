@@ -9,6 +9,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 public class Modelo {
 
 	static String driver = "com.mysql.jdbc.Driver";
@@ -66,6 +68,10 @@ public class Modelo {
 	}
 	
 	public void demandanteaeliminar(VistaBajaDemandante vbajademandante, VistaConfirmacionBaja vconfirmarbaja) {
+		if (vbajademandante.chcElegir.getSelectedItem().equals("Elige uno...")) {
+			System.out.println("No puede escoger ese elemento");
+		}
+		
 		String[] demandanteelegido = vbajademandante.chcElegir.getSelectedItem().split(" "+"-"+" ");
 		String demandante = (demandanteelegido[1]);
 		// Guardar en el label el cliente que se ha seleccionado.
@@ -114,7 +120,6 @@ public class Modelo {
 	}
 	
 	public void cargarOferta(VistaModificacionOferta vmodoferta) {
-
 		String sentencia = "SELECT * FROM ofertas;";
 		Connection connection = null;
 		Statement statement = null;

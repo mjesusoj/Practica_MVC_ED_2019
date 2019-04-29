@@ -76,26 +76,6 @@ public class Controlador implements WindowListener, ActionListener{
 		if (vmenuprincipal.isActive()) {
 			System.exit(0);
 		}
-		
-		else if(vbajademandante.isActive()) {
-			vbajademandante.setVisible(false);
-			vmenuprincipal.setVisible(true);
-		}
-		
-		else if(vmodoferta.isActive()) {
-			vmodoferta.setVisible(false);
-			vmenuprincipal.setVisible(true);
-		}
-		
-		else if(vconsultaoferta.isActive()) {
-			vconsultaoferta.setVisible(false);
-			vmenuprincipal.setVisible(true);
-		}
-		
-		else if(valtasignacion.isActive()) {
-			valtasignacion.setVisible(false);
-			vmenuprincipal.setVisible(true);
-		}
 	}
 
 	@Override

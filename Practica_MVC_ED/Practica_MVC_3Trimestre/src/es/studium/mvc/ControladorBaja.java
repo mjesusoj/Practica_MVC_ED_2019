@@ -24,8 +24,9 @@ public class ControladorBaja implements WindowListener, ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		if (vbajademandante.btnEliminar.equals(arg0.getSource())) {
 			vbajademandante.setVisible(false);
-			VistaConfirmacionBaja vconfirmarbaja = new VistaConfirmacionBaja();
-
+			VistaConfirmacionBaja vconfirmarbaja1 = new VistaConfirmacionBaja();
+			vconfirmarbaja = vconfirmarbaja1;
+			
 			// Llamar al método para saber que demandante se ha elegido.
 			modelo.demandanteaeliminar(vbajademandante, vconfirmarbaja);
 			vconfirmarbaja.btnSi.addActionListener(this);
@@ -34,11 +35,12 @@ public class ControladorBaja implements WindowListener, ActionListener{
 		}
 
 		else if (vbajademandante.btnCancelar.equals(arg0.getSource())){
+			vbajademandante.setVisible(false);
 			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
 			new Controlador(vmenuprincipal, modelo);
 		}
 
-		if (vconfirmarbaja.btnSi.equals(arg0.getSource())) {
+		else if (vconfirmarbaja.btnSi.equals(arg0.getSource())) {
 			modelo.eliminarDemandante(vbajademandante, vconfirmarbaja);
 		}
 	
@@ -57,9 +59,10 @@ public class ControladorBaja implements WindowListener, ActionListener{
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		if (vbajademandante.isActive()) {
+			vbajademandante.setVisible(false);
 			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
 			new Controlador(vmenuprincipal, modelo);
-		}	
+		}
 			
 		else if(vconfirmarbaja.isActive()) {
 			vconfirmarbaja.setVisible(false);

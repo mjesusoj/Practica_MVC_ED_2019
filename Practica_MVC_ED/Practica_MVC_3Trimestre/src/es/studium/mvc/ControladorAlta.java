@@ -22,13 +22,12 @@ public class ControladorAlta implements WindowListener, ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(valtasignacion.btnAceptar.equals(arg0.getSource())) {
-			valtasignacion.setVisible(false);
-			VistaAltaAsignacion valtasignacion1 = new VistaAltaAsignacion();
-			valtasignacion = valtasignacion1;
-			
 			modelo.insertarasignacion(valtasignacion);
+			System.out.println("Alta Correcta");
 		}
+		
 		else if(valtasignacion.btnCancelar.equals(arg0.getSource())) {
+			valtasignacion.setVisible(false);
 			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
 			new Controlador(vmenuprincipal, modelo);
 		}
@@ -43,6 +42,7 @@ public class ControladorAlta implements WindowListener, ActionListener{
 	@Override
 	public void windowClosing(WindowEvent e) {
 		if (valtasignacion.isActive()) {
+			valtasignacion.setVisible(false);
 			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
 			new Controlador(vmenuprincipal, modelo);
 		}
