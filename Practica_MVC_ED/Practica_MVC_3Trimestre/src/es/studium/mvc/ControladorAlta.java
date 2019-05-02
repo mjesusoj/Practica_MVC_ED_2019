@@ -29,7 +29,7 @@ public class ControladorAlta implements WindowListener, ActionListener{
 		else if(valtasignacion.btnCancelar.equals(arg0.getSource())) {
 			valtasignacion.setVisible(false);
 			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
-			new Controlador(vmenuprincipal, modelo);
+			new ControladorPrincipal(vmenuprincipal, modelo);
 		}
 	}
 
@@ -44,7 +44,7 @@ public class ControladorAlta implements WindowListener, ActionListener{
 		if (valtasignacion.isActive()) {
 			valtasignacion.setVisible(false);
 			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
-			new Controlador(vmenuprincipal, modelo);
+			new ControladorPrincipal(vmenuprincipal, modelo);
 		}
 	}
 

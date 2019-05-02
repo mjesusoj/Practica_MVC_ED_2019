@@ -181,6 +181,51 @@ public class Modelo {
 		vedicionoferta.txtRequisitos.setText(escoger[5]);
 	}
 	
+	public static void modificarcamposEdicion(VistaEdicionOferta vedicionoferta) {
+		String[] oferta = vedicionoferta.oferta.getText().split(":" + " ");
+		String idOferta = oferta[1];
+		
+		String sentencia = "UPDATE ofertas SET fechaOferta= '"+vedicionoferta.txtFecha.getText()+"' , "
+				+ "fechaFinOferta= '"+vedicionoferta.txtFechaFin.getText()+"', "
+						+ "requisitosOferta= '"+vedicionoferta.txtRequisitos.getText()+"' "
+								+ "WHERE idOferta = '"+idOferta+"';";
+		Connection connection = null;
+		Statement statement = null;
+		
+		try 
+		{
+			Class.forName(driver);
+			connection = DriverManager.getConnection(url, login, password);
+			statement = connection.createStatement();						
+			statement.executeUpdate(sentencia);
+		}
+
+		catch (ClassNotFoundException cnfe)
+		{
+			System.out.println("Error 1: "+cnfe.getMessage());
+		}
+
+		catch (SQLException sqle)
+		{
+			System.out.println("Error 2: "+sqle.getMessage());
+		}
+
+		finally
+		{
+			try
+			{
+				if(connection!=null)
+				{
+					connection.close();
+				}
+			}
+			catch (SQLException e)
+			{
+				System.out.println("Error 3: "+e.getMessage());
+			}
+		}
+	}
+	
 	public Object[][] rellenarTabla() {
 		
 		String sentencia = "SELECT * FROM ofertas;";

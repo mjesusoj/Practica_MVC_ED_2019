@@ -37,7 +37,7 @@ public class ControladorBaja implements WindowListener, ActionListener{
 		else if (vbajademandante.btnCancelar.equals(arg0.getSource())){
 			vbajademandante.setVisible(false);
 			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
-			new Controlador(vmenuprincipal, modelo);
+			new ControladorPrincipal(vmenuprincipal, modelo);
 		}
 
 		else if (vconfirmarbaja.btnSi.equals(arg0.getSource())) {
@@ -61,7 +61,7 @@ public class ControladorBaja implements WindowListener, ActionListener{
 		if (vbajademandante.isActive()) {
 			vbajademandante.setVisible(false);
 			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
-			new Controlador(vmenuprincipal, modelo);
+			new ControladorPrincipal(vmenuprincipal, modelo);
 		}
 			
 		else if(vconfirmarbaja.isActive()) {

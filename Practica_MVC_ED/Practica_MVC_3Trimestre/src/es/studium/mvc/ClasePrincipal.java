@@ -4,6 +4,6 @@ public class ClasePrincipal {
 	public static void main(String[] args) {
 		VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
 		Modelo modelo = new Modelo();
-		new Controlador(vmenuprincipal, modelo);
+		new ControladorPrincipal(vmenuprincipal, modelo);
 	}
 }

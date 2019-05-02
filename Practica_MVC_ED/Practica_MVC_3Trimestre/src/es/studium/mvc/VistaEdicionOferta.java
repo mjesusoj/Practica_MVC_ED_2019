@@ -43,8 +43,9 @@ public class VistaEdicionOferta extends JFrame{
 		add(pnlSuperior, BorderLayout.NORTH);
 		add(pnlCentral, BorderLayout.CENTER);
 		add(pnlInferior, "South");
-		setSize(400,300);
+		setSize(270,200);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		setVisible(true);
 	}
 }
