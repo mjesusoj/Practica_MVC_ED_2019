@@ -9,8 +9,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.JOptionPane;
-
 public class Modelo {
 
 	static String driver = "com.mysql.jdbc.Driver";
@@ -197,6 +195,7 @@ public class Modelo {
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, login, password);
 			statement = connection.createStatement();						
+			System.out.println(sentencia);
 			statement.executeUpdate(sentencia);
 		}
 
