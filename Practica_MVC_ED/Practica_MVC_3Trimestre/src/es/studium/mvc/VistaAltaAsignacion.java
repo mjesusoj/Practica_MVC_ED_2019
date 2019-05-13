@@ -48,7 +48,7 @@ public class VistaAltaAsignacion extends JFrame{
 		add(pnlOferta);
 		add(pnlDemandante);
 		add(pnlInferior, "South");
-		setSize(300,300);
+		setSize(300,250);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);

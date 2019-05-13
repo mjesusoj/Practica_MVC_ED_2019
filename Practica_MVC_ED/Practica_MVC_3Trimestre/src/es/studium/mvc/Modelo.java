@@ -297,7 +297,7 @@ public class Modelo {
 			//Crear un objeto ResultSet para guardar lo obtenido y ejecutar la sentencia SQL
 			rs = statement.executeQuery(sentencia);
 			
-			valtasignacion.chcOferta.add("Elegir uno...");
+			valtasignacion.chcOferta.add("Elegir uno...                         ");
 			
 			while (rs.next())
 			{
@@ -347,7 +347,7 @@ public class Modelo {
 			//Crear un objeto ResultSet para guardar lo obtenido y ejecutar la sentencia SQL
 			rs = statement.executeQuery(sentencia);
 
-			valtasignacion.chcDemandante.add("Elegir uno...");
+			valtasignacion.chcDemandante.add("Elegir uno...            ");
 			
 			while (rs.next())
 			{
@@ -401,6 +401,7 @@ public class Modelo {
 		{
 			System.out.println("Error 2: "+sqle.getMessage());
 		}
+		
 		finally
 		{
 			try

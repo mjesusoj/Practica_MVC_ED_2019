@@ -23,7 +23,6 @@ public class ControladorAlta implements WindowListener, ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		if(valtasignacion.btnAceptar.equals(arg0.getSource())) {
 			modelo.insertarasignacion(valtasignacion);
-			System.out.println("Alta Correcta");
 		}
 		
 		else if(valtasignacion.btnCancelar.equals(arg0.getSource())) {
