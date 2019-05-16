@@ -37,7 +37,7 @@ public class VistaAltaAsignacion extends JFrame{
 		pnlFecha.add(lblFecha);
 		pnlFecha.add(txtFecha);
 		// Impedir que se edite
-		txtFecha.setEditable(false);
+		//txtFecha.setEditable(false);
 		pnlOferta.add(lblOferta);
 		pnlOferta.add(chcOferta);
 		pnlDemandante.add(lblDemandante);
@@ -48,7 +48,7 @@ public class VistaAltaAsignacion extends JFrame{
 		add(pnlOferta);
 		add(pnlDemandante);
 		add(pnlInferior, "South");
-		setSize(300,250);
+		setSize(350,250);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);

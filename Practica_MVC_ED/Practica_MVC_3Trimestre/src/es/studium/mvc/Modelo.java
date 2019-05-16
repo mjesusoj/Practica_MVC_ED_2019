@@ -280,8 +280,7 @@ public class Modelo {
 	}
 	
 	public void cargaridOfertaAlta(VistaAltaAsignacion valtasignacion) {
-
-		String sentencia = "SELECT idOferta FROM ofertas;";
+		String sentencia = "SELECT * FROM ofertas;";
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet rs = null;
@@ -297,12 +296,13 @@ public class Modelo {
 			//Crear un objeto ResultSet para guardar lo obtenido y ejecutar la sentencia SQL
 			rs = statement.executeQuery(sentencia);
 			
-			valtasignacion.chcOferta.add("Elegir uno...                         ");
+			valtasignacion.chcOferta.add("Elegir uno...");
 			
 			while (rs.next())
 			{
 				int idOferta = rs.getInt("idOferta");
-				valtasignacion.chcOferta.add(idOferta+"");
+				String requisitosOferta = rs.getString("requisitosOferta");
+				valtasignacion.chcOferta.add(idOferta +" " + requisitosOferta);
 			}
 		}
 		catch (ClassNotFoundException cnfe)
@@ -331,7 +331,7 @@ public class Modelo {
 	
 	public void cargaridDemandanteAlta(VistaAltaAsignacion valtasignacion) {
 
-		String sentencia = "SELECT idDemandante FROM demandantes;";
+		String sentencia = "SELECT * FROM demandantes;";
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet rs = null;
@@ -347,12 +347,15 @@ public class Modelo {
 			//Crear un objeto ResultSet para guardar lo obtenido y ejecutar la sentencia SQL
 			rs = statement.executeQuery(sentencia);
 
-			valtasignacion.chcDemandante.add("Elegir uno...            ");
+			valtasignacion.chcDemandante.add("Elegir uno...");
 			
 			while (rs.next())
 			{
 				int idDemandante = rs.getInt("idDemandante");
-				valtasignacion.chcDemandante.add(idDemandante+"");
+				String nombreDemandante = rs.getString("nombreDemandante");
+				String apellidosDemandante = rs.getString("apellidosDemandante");
+				String dniDemandante = rs.getString("dniDemandante");
+				valtasignacion.chcDemandante.add(idDemandante+" " + nombreDemandante + " " + apellidosDemandante + " " + dniDemandante);
 			}
 		}
 		catch (ClassNotFoundException cnfe)
@@ -379,7 +382,13 @@ public class Modelo {
 		}
 	}
 	
-	public void insertarasignacion(VistaAltaAsignacion valtasignacion) {
+	public void insertarasignacion(VistaAltaAsignacion valtasignacion){
+		String [] elegir = valtasignacion.chcDemandante.getSelectedItem().split(" ");
+		String [] elegiridOferta = valtasignacion.chcOferta.getSelectedItem().split(" ");
+		
+		String idDemandante = elegir[0];
+		String idOferta = elegiridOferta[0];
+		
 		Connection connection = null;
 		Statement statement = null;
 
@@ -391,7 +400,7 @@ public class Modelo {
 			connection = DriverManager.getConnection(url, login, password);
 			//Crear una sentencia
 			statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO asignaciones VALUES(NULL, '"+fechamericana()+"', '"+valtasignacion.chcOferta.getSelectedItem()+"', '"+valtasignacion.chcDemandante.getSelectedItem()+"');");
+			statement.executeUpdate("INSERT INTO asignaciones VALUES(NULL, '"+fechamericana(valtasignacion)+"', '"+idOferta+"', '"+idDemandante+"');");
 		}
 		catch (ClassNotFoundException cnfe)
 		{
@@ -426,11 +435,10 @@ public class Modelo {
 		return fecha;
 	}
 	
-	public String fechamericana() {
-		Date date = new Date();
-		DateFormat dateFormatAmerican = new SimpleDateFormat("yyyy/MM/dd");
-		String fechamericana = dateFormatAmerican.format(date);
-		
+	public static String fechamericana(VistaAltaAsignacion valtasignacion){
+		String fecha = valtasignacion.txtFecha.getText();
+		String quitarbarra [] = fecha.split("/");
+		String fechamericana = quitarbarra[2] + "-" + quitarbarra[1] + "-" + quitarbarra[0];
 		return fechamericana;
 	}
 }
