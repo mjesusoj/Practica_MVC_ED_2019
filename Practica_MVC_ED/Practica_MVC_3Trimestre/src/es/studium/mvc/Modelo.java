@@ -3,34 +3,32 @@ package es.studium.mvc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Modelo {
+import javax.swing.JOptionPane;
 
+public class Modelo {
 	static String driver = "com.mysql.jdbc.Driver";
 	static String url = "jdbc:mysql://localhost:3306/practicamvc?autoReconnect=true&useSSL=false";
 	static String login = "root";
 	static String password = "Studium2018;";
+	static Connection connection = null;
+	static Statement statement = null;
+	static ResultSet rs = null;
 	
 	public void insertarDemandanteBaja(VistaBajaDemandante vbajademandante) {
 		String sentencia = "SELECT idDemandante, nombreDemandante, apellidosDemandante, dniDemandante FROM demandantes;";
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet rs = null;
 		
 		try
 		{
-			//Cargar los controladores para el acceso a la BD
 			Class.forName(driver);
-			//Establecer la conexión con la BD Empresa
 			connection = DriverManager.getConnection(url, login, password);
-			//Crear una sentencia
 			statement = connection.createStatement();
-			//Crear un objeto ResultSet para guardar lo obtenido y ejecutar la sentencia SQL
 			rs = statement.executeQuery(sentencia);
 			while (rs.next())
 			{
@@ -49,20 +47,7 @@ public class Modelo {
 		{
 			System.out.println("Error 2: "+sqle.getMessage());
 		}
-		finally
-		{
-			try
-			{
-				if(connection!=null)
-				{
-					connection.close();
-				}
-			}
-			catch (SQLException e)
-			{
-				System.out.println("Error 3: "+e.getMessage());
-			}
-		}
+		desconectar();
 	}
 	
 	public void demandanteaeliminar(VistaBajaDemandante vbajademandante, VistaConfirmacionBaja vconfirmarbaja) {
@@ -77,19 +62,13 @@ public class Modelo {
 	} 
 	
 	public void eliminarDemandante(VistaBajaDemandante vbajademandante, VistaConfirmacionBaja vconfirmarbaja) {
-		Connection connection = null;
-		Statement statement = null;
-		
 		try
 		{
-			//Cargar los controladores para el acceso a la BD
 			Class.forName(driver);
-			//Establecer la conexión con la BD Empresa
 			connection = DriverManager.getConnection(url, login, password);
 			statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			String [] escogerdato = vbajademandante.chcElegir.getSelectedItem().split(" "+"-"+" ");
 			int idDemandante = Integer.parseInt(escogerdato[0]);
-			System.out.println(idDemandante);
 			statement.executeUpdate("DELETE FROM demandantes WHERE idDemandante = '"+idDemandante+"';");
 		}
 		
@@ -101,33 +80,17 @@ public class Modelo {
 		{
 			System.out.println("Error 2: "+sqle.getMessage());
 		}
-		finally
-		{
-			try
-			{
-				if(connection!=null)
-				{
-					connection.close();
-				}
-			}
-			catch (SQLException e)
-			{
-				System.out.println("Error 3: "+e.getMessage());
-			}
-		}
+		desconectar();
 	}
 	
 	public void cargarOferta(VistaModificacionOferta vmodoferta) {
-		String sentencia = "SELECT * FROM ofertas;";
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet rs = null;
-
+		String sentencia = "SELECT idOferta, DATE_FORMAT(fechaOferta,'%d/%m/%Y') AS 'fechaOferta', "
+				+ "DATE_FORMAT(fechaFinOferta,'%d/%m/%Y') AS 'fechaFinOferta', requisitosOferta FROM ofertas;";
+		
 		try
 		{
-			//Cargar los controladores para el acceso a la BD
 			Class.forName(driver);
-			//Establecer la conexión con la BD Empresa
+			//Establecer la conexión con la BD
 			connection = DriverManager.getConnection(url, login, password);
 			//Crear una sentencia
 			statement = connection.createStatement();
@@ -151,20 +114,7 @@ public class Modelo {
 		{
 			System.out.println("Error 2: "+sqle.getMessage());
 		}
-		finally
-		{
-			try
-			{
-				if(connection!=null)
-				{
-					connection.close();
-				}
-			}
-			catch (SQLException e)
-			{
-				System.out.println("Error 3: "+e.getMessage());
-			}
-		}
+		desconectar();
 	}
 
 	public void cargarcomponentesEdicion(VistaEdicionOferta vedicionoferta, VistaModificacionOferta vmodoferta) {
@@ -183,19 +133,22 @@ public class Modelo {
 		String[] oferta = vedicionoferta.oferta.getText().split(":" + " ");
 		String idOferta = oferta[1];
 		
-		String sentencia = "UPDATE ofertas SET fechaOferta= '"+vedicionoferta.txtFecha.getText()+"' , "
-				+ "fechaFinOferta= '"+vedicionoferta.txtFechaFin.getText()+"', "
+		String[] escogerfechaOferta = vedicionoferta.txtFecha.getText().split("/");
+		String fechaOferta = escogerfechaOferta[2] + "-" + escogerfechaOferta[1] + "-" + escogerfechaOferta[0];
+		
+		String[] escogerfechaFinOferta = vedicionoferta.txtFechaFin.getText().split("/");
+		String fechaFinOferta = escogerfechaFinOferta[2] + "-" + escogerfechaFinOferta[1] + "-" + escogerfechaFinOferta[0];
+		
+		String sentencia = "UPDATE ofertas SET fechaOferta= '"+fechaOferta+"' , "
+				+ "fechaFinOferta= '"+fechaFinOferta+"', "
 						+ "requisitosOferta= '"+vedicionoferta.txtRequisitos.getText()+"' "
 								+ "WHERE idOferta = '"+idOferta+"';";
-		Connection connection = null;
-		Statement statement = null;
 		
 		try 
 		{
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, login, password);
 			statement = connection.createStatement();						
-			System.out.println(sentencia);
 			statement.executeUpdate(sentencia);
 		}
 
@@ -209,29 +162,16 @@ public class Modelo {
 			System.out.println("Error 2: "+sqle.getMessage());
 		}
 
-		finally
-		{
-			try
-			{
-				if(connection!=null)
-				{
-					connection.close();
-				}
-			}
-			catch (SQLException e)
-			{
-				System.out.println("Error 3: "+e.getMessage());
-			}
-		}
+		desconectar();
 	}
 	
-	public Object[][] rellenarTabla() {
-		
-		String sentencia = "SELECT * FROM ofertas;";
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet rs = null;
-		
+	public static Object[][] rellenarTabla() {
+		String sentencia = "SELECT idOferta AS 'Oferta', COUNT(idDemandanteFK) AS 'Nº Demandantes Asignados', "
+				+ "DATE_FORMAT(fechaFinOferta,'%d/%m/%Y') AS 'Fecha Fin'\r\n" + 
+				"FROM ofertas, asignaciones\r\n" + 
+				"WHERE ofertas.idOferta = asignaciones.idDemandanteFK\r\n" + 
+				"ORDER BY 1;";
+
 		try 
 		{
 			Class.forName(driver);
@@ -239,16 +179,24 @@ public class Modelo {
 			statement = connection.createStatement();						
 			rs = statement.executeQuery(sentencia);
 			
+			ResultSetMetaData rsMd = rs.getMetaData();
+			// Guardar en una variable las columnas que hay
+			int cantidadColumnas = rsMd.getColumnCount();
+
+			// Bucle para ir de 1 hasta las columnas que existen
+			for (int i=1;i<=cantidadColumnas;i++) {
+				// Añadir los títulos de las columnas
+				VistaConsultaOferta.modelo.addColumn(rsMd.getColumnLabel(i));
+			}
+
 			while (rs.next()) {
-				int idCliente = rs.getInt("idCliente");
-				String numDemandantes = rs.getString("numDemandantes");
-				String fechaFin = rs.getString("fechaFin");
-
-				Object [][] datosFilaFinal= {
-						{idCliente, numDemandantes, fechaFin}
-				};
-
-				return datosFilaFinal;
+				Object [] fila = new Object[cantidadColumnas];
+				for (int i=0;i<cantidadColumnas;i++) {
+					// Coger los objetos de la bd	
+					fila[i] = rs.getObject(i+1);
+				}
+				// Añadir las columnas
+				VistaConsultaOferta.modelo.addRow(fila);
 			}
 		}
 
@@ -262,40 +210,20 @@ public class Modelo {
 			System.out.println("Error 2: "+sqle.getMessage());
 		}
 
-		finally
-		{
-			try
-			{
-				if(connection!=null)
-				{
-					connection.close();
-				}
-			}
-			catch (SQLException e)
-			{
-				System.out.println("Error 3: "+e.getMessage());
-			}
-		}
+		desconectar();
 		return null;
 	}
 	
 	public void cargaridOfertaAlta(VistaAltaAsignacion valtasignacion) {
 		String sentencia = "SELECT * FROM ofertas;";
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet rs = null;
 
 		try
 		{
-			//Cargar los controladores para el acceso a la BD
 			Class.forName(driver);
-			//Establecer la conexión con la BD Empresa
 			connection = DriverManager.getConnection(url, login, password);
-			//Crear una sentencia
 			statement = connection.createStatement();
 			//Crear un objeto ResultSet para guardar lo obtenido y ejecutar la sentencia SQL
 			rs = statement.executeQuery(sentencia);
-			
 			valtasignacion.chcOferta.add("Elegir uno...");
 			
 			while (rs.next())
@@ -313,40 +241,18 @@ public class Modelo {
 		{
 			System.out.println("Error 2: "+sqle.getMessage());
 		}
-		finally
-		{
-			try
-			{
-				if(connection!=null)
-				{
-					connection.close();
-				}
-			}
-			catch (SQLException e)
-			{
-				System.out.println("Error 3: "+e.getMessage());
-			}
-		}
+		desconectar();
 	}
 	
 	public void cargaridDemandanteAlta(VistaAltaAsignacion valtasignacion) {
-
 		String sentencia = "SELECT * FROM demandantes;";
-		Connection connection = null;
-		Statement statement = null;
-		ResultSet rs = null;
 
 		try
 		{
-			//Cargar los controladores para el acceso a la BD
 			Class.forName(driver);
-			//Establecer la conexión con la BD Empresa
 			connection = DriverManager.getConnection(url, login, password);
-			//Crear una sentencia
 			statement = connection.createStatement();
-			//Crear un objeto ResultSet para guardar lo obtenido y ejecutar la sentencia SQL
 			rs = statement.executeQuery(sentencia);
-
 			valtasignacion.chcDemandante.add("Elegir uno...");
 			
 			while (rs.next())
@@ -366,20 +272,7 @@ public class Modelo {
 		{
 			System.out.println("Error 2: "+sqle.getMessage());
 		}
-		finally
-		{
-			try
-			{
-				if(connection!=null)
-				{
-					connection.close();
-				}
-			}
-			catch (SQLException e)
-			{
-				System.out.println("Error 3: "+e.getMessage());
-			}
-		}
+		desconectar();
 	}
 	
 	public void insertarasignacion(VistaAltaAsignacion valtasignacion){
@@ -388,18 +281,13 @@ public class Modelo {
 		
 		String idDemandante = elegir[0];
 		String idOferta = elegiridOferta[0];
-		
-		Connection connection = null;
-		Statement statement = null;
 
 		try
 		{
-			//Cargar los controladores para el acceso a la BD
 			Class.forName(driver);
-			//Establecer la conexión con la BD Empresa
 			connection = DriverManager.getConnection(url, login, password);
-			//Crear una sentencia
 			statement = connection.createStatement();
+			// Realizar la actualización
 			statement.executeUpdate("INSERT INTO asignaciones VALUES(NULL, '"+fechamericana(valtasignacion)+"', '"+idOferta+"', '"+idDemandante+"');");
 		}
 		catch (ClassNotFoundException cnfe)
@@ -410,20 +298,20 @@ public class Modelo {
 		{
 			System.out.println("Error 2: "+sqle.getMessage());
 		}
-		
-		finally
+		desconectar();
+	}
+	
+	public static void desconectar() {
+		try
 		{
-			try
+			if(connection!=null)
 			{
-				if(connection!=null)
-				{
-					connection.close();
-				}
+				connection.close();
 			}
-			catch (SQLException e)
-			{
-				System.out.println("Error 3: "+e.getMessage());
-			}
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, "No se puede cerrar la conexión con la BD", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -431,7 +319,6 @@ public class Modelo {
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		String fecha= dateFormat.format(date);
-		
 		return fecha;
 	}
 	

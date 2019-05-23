@@ -50,6 +50,7 @@ public class ControladorPrincipal extends WindowAdapter implements ActionListene
 		else if (vmenuprincipal.mniOfertasConsulta.equals(arg0.getSource())) {
 			vmenuprincipal.setVisible(false);
 			VistaConsultaOferta vconsultaoferta = new VistaConsultaOferta();
+			
 			new ControladorConsulta(vconsultaoferta, modelo);
 		}
 
