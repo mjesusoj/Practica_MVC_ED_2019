@@ -41,11 +41,12 @@ public class Modelo {
 		}
 		catch (ClassNotFoundException cnfe)
 		{
-			System.out.println("Error 1: "+cnfe.getMessage());
+			JOptionPane.showMessageDialog(null, "Hay un problema al cargar el driver", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (SQLException sqle)
 		{
-			System.out.println("Error 2: "+sqle.getMessage());
+			JOptionPane.showMessageDialog(null, "Error al realizar la operación, "
+					+ "considere mirar si el servicio de MYSQL esta activo o algo por el estilo", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		desconectar();
 	}
@@ -74,11 +75,12 @@ public class Modelo {
 		
 		catch (ClassNotFoundException cnfe)
 		{
-			System.out.println("Error 1: "+cnfe.getMessage());
+			JOptionPane.showMessageDialog(null, "Hay un problema al cargar el driver", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (SQLException sqle)
 		{
-			System.out.println("Error 2: "+sqle.getMessage());
+			JOptionPane.showMessageDialog(null, "Error al realizar la operación, "
+					+ "considere mirar si el servicio de MYSQL esta activo o algo por el estilo", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		desconectar();
 	}
@@ -108,11 +110,12 @@ public class Modelo {
 		}
 		catch (ClassNotFoundException cnfe)
 		{
-			System.out.println("Error 1: "+cnfe.getMessage());
+			JOptionPane.showMessageDialog(null, "Hay un problema al cargar el driver", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (SQLException sqle)
 		{
-			System.out.println("Error 2: "+sqle.getMessage());
+			JOptionPane.showMessageDialog(null, "Error al realizar la operación, "
+					+ "considere mirar si el servicio de MYSQL esta activo o algo por el estilo", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		desconectar();
 	}
@@ -154,12 +157,13 @@ public class Modelo {
 
 		catch (ClassNotFoundException cnfe)
 		{
-			System.out.println("Error 1: "+cnfe.getMessage());
+			JOptionPane.showMessageDialog(null, "Hay un problema al cargar el driver", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 		catch (SQLException sqle)
 		{
-			System.out.println("Error 2: "+sqle.getMessage());
+			JOptionPane.showMessageDialog(null, "Error al realizar la operación, "
+					+ "considere mirar si el servicio de MYSQL esta activo o algo por el estilo", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 		desconectar();
@@ -202,12 +206,13 @@ public class Modelo {
 
 		catch (ClassNotFoundException cnfe)
 		{
-			System.out.println("Error 1: "+cnfe.getMessage());
+			JOptionPane.showMessageDialog(null, "Hay un problema al cargar el driver", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 		catch (SQLException sqle)
 		{
-			System.out.println("Error 2: "+sqle.getMessage());
+			JOptionPane.showMessageDialog(null, "Error al realizar la operación, "
+					+ "considere mirar si el servicio de MYSQL esta activo o algo por el estilo", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 		desconectar();
@@ -235,11 +240,12 @@ public class Modelo {
 		}
 		catch (ClassNotFoundException cnfe)
 		{
-			System.out.println("Error 1: "+cnfe.getMessage());
+			JOptionPane.showMessageDialog(null, "Hay un problema al cargar el driver", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (SQLException sqle)
 		{
-			System.out.println("Error 2: "+sqle.getMessage());
+			JOptionPane.showMessageDialog(null, "Error al realizar la operación, "
+					+ "considere mirar si el servicio de MYSQL esta activo o algo por el estilo", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		desconectar();
 	}
@@ -266,11 +272,12 @@ public class Modelo {
 		}
 		catch (ClassNotFoundException cnfe)
 		{
-			System.out.println("Error 1: "+cnfe.getMessage());
+			JOptionPane.showMessageDialog(null, "Hay un problema al cargar el driver", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (SQLException sqle)
 		{
-			System.out.println("Error 2: "+sqle.getMessage());
+			JOptionPane.showMessageDialog(null, "Error al realizar la operación, "
+					+ "considere mirar si el servicio de MYSQL esta activo o algo por el estilo", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		desconectar();
 	}
@@ -292,11 +299,12 @@ public class Modelo {
 		}
 		catch (ClassNotFoundException cnfe)
 		{
-			System.out.println("Error 1: "+cnfe.getMessage());
+			JOptionPane.showMessageDialog(null, "Hay un problema al cargar el driver", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (SQLException sqle)
 		{
-			System.out.println("Error 2: "+sqle.getMessage());
+			JOptionPane.showMessageDialog(null, "Error al realizar la operación, "
+					+ "considere mirar si el servicio de MYSQL esta activo o algo por el estilo", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		desconectar();
 	}

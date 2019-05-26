@@ -58,7 +58,11 @@ public class ControladorModificacion extends WindowAdapter implements ActionList
 
 		else if(vedicionoferta.isActive()) {
 			vedicionoferta.setVisible(false);
-			vmodoferta.setVisible(true);
+			VistaModificacionOferta vmodoferta = new VistaModificacionOferta();
+
+			new ControladorModificacion(vmodoferta, modelo);
+			// Iniciar método de la clase Modelo
+			modelo.cargarOferta(vmodoferta);
 		}
 	}
 }
