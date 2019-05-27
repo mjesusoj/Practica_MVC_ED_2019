@@ -20,13 +20,13 @@ public class Modelo {
 	static Connection connection = null;
 	static Statement statement = null;
 	static ResultSet rs = null;
-	
+
 	/**
 	 * Método que inserta el Demandante para realizar la baja
 	 */
 	public void insertarDemandanteBaja(VistaBajaDemandante vbajademandante) {
 		String sentencia = "SELECT idDemandante, nombreDemandante, apellidosDemandante, dniDemandante FROM demandantes;";
-		
+
 		try
 		{
 			Class.forName(driver);
@@ -53,23 +53,19 @@ public class Modelo {
 		}
 		desconectar();
 	}
-	
+
 	/**
 	 * Se pregunta si se quiere eliminar el demandante 
 	 * @param vbajademandante
 	 * @param vconfirmarbaja
 	 */
 	public void demandanteaeliminar(VistaBajaDemandante vbajademandante, VistaConfirmacionBaja vconfirmarbaja) {
-		if (vbajademandante.chcElegir.getSelectedItem().equals("Elige uno...")) {
-			JOptionPane.showMessageDialog(null, "No se puede escoger ese item", "Error", JOptionPane.ERROR_MESSAGE);
-		}
-		
 		String[] demandanteelegido = vbajademandante.chcElegir.getSelectedItem().split(" "+"-"+" ");
 		String demandante = (demandanteelegido[1]);
 		// Guardar en el label el cliente que se ha seleccionado.
 		vconfirmarbaja.eliminarDemandante.setText("¿Seguro/a de eliminar a" + " " + demandante +"?");
 	} 
-	
+
 	/**
 	 * Se elimina el demandante que se ha escogido anteriormente
 	 * @param vbajademandante
@@ -85,7 +81,7 @@ public class Modelo {
 			int idDemandante = Integer.parseInt(escogerdato[0]);
 			statement.executeUpdate("DELETE FROM demandantes WHERE idDemandante = '"+idDemandante+"';");
 		}
-		
+
 		catch (ClassNotFoundException cnfe)
 		{
 			JOptionPane.showMessageDialog(null, "Hay un problema al cargar el driver", "Error", JOptionPane.ERROR_MESSAGE);
@@ -97,7 +93,7 @@ public class Modelo {
 		}
 		desconectar();
 	}
-	
+
 	/**
 	 * Carga la oferta 
 	 * @param vmodoferta
@@ -105,7 +101,7 @@ public class Modelo {
 	public void cargarOferta(VistaModificacionOferta vmodoferta) {
 		String sentencia = "SELECT idOferta, DATE_FORMAT(fechaOferta,'%d/%m/%Y') AS 'fechaOferta', "
 				+ "DATE_FORMAT(fechaFinOferta,'%d/%m/%Y') AS 'fechaFinOferta', requisitosOferta FROM ofertas;";
-		
+
 		try
 		{
 			Class.forName(driver);
@@ -146,19 +142,19 @@ public class Modelo {
 		String [] oferta = vmodoferta.chcElegir.getSelectedItem().split("-" + " ");  
 		String [] escoger = vmodoferta.chcElegir.getSelectedItem().split(" ");  
 		String fechaFinOferta = escoger[3].replace("|", "");
-		
+
 		// Introducir lo seleccionado en los componentes de edición
 		vedicionoferta.oferta.setText("Oferta:" + " " + oferta[0]);
 		vedicionoferta.txtFecha.setText(escoger[2]);
 		vedicionoferta.txtFechaFin.setText(fechaFinOferta);
-		
+
 		try {
 			vedicionoferta.txtRequisitos.setText(escoger[5] + " " + escoger[6]);
 		}catch(IndexOutOfBoundsException e) {
 			vedicionoferta.txtRequisitos.setText(escoger[5]);
 		}
 	}
-	
+
 	/**
 	 * Se realiza la actualización de la Oferta
 	 * @param vedicionoferta
@@ -166,21 +162,21 @@ public class Modelo {
 	public static void modificarcamposEdicion(VistaEdicionOferta vedicionoferta) {
 		String[] oferta = vedicionoferta.oferta.getText().split(":" + " ");
 		String idOferta = oferta[1];
-		
+
 		String[] escogerfechaOferta = vedicionoferta.txtFecha.getText().split("/");
 		String fechaOferta = escogerfechaOferta[2] + "-" + escogerfechaOferta[1] + "-" + escogerfechaOferta[0];
-		
+
 		String[] escogerfechaFinOferta = vedicionoferta.txtFechaFin.getText().split("/");
 		String fechaFinOferta = escogerfechaFinOferta[2] + "-" + escogerfechaFinOferta[1] + "-" + escogerfechaFinOferta[0];
-		
+
 		String[] escogerequisitosOferta = vedicionoferta.txtRequisitos.getText().split("," + " ");
 		String requisitosOferta = escogerequisitosOferta[0];
-		
+
 		String sentencia = "UPDATE ofertas SET fechaOferta= '"+fechaOferta+"' , "
 				+ "fechaFinOferta= '"+fechaFinOferta+"', "
-						+ "requisitosOferta= '"+requisitosOferta+"' "
-								+ "WHERE idOferta = '"+idOferta+"';";
-		
+				+ "requisitosOferta= '"+requisitosOferta+"' "
+				+ "WHERE idOferta = '"+idOferta+"';";
+
 		try 
 		{
 			Class.forName(driver);
@@ -202,7 +198,7 @@ public class Modelo {
 
 		desconectar();
 	}
-	
+
 	/**
 	 * Rellena la tabla de ofertas
 	 */
@@ -219,7 +215,7 @@ public class Modelo {
 			connection = DriverManager.getConnection(url, login, password);
 			statement = connection.createStatement();						
 			rs = statement.executeQuery(sentencia);
-			
+
 			ResultSetMetaData rsMd = rs.getMetaData();
 			// Guardar en una variable las columnas que hay
 			int cantidadColumnas = rsMd.getColumnCount();
@@ -255,7 +251,7 @@ public class Modelo {
 		desconectar();
 		return null;
 	}
-	
+
 	public void cargaridOfertaAlta(VistaAltaAsignacion valtasignacion) {
 		String sentencia = "SELECT * FROM ofertas;";
 
@@ -267,7 +263,7 @@ public class Modelo {
 			//Crear un objeto ResultSet para guardar lo obtenido y ejecutar la sentencia SQL
 			rs = statement.executeQuery(sentencia);
 			valtasignacion.chcOferta.add("Elegir uno...");
-			
+
 			while (rs.next())
 			{
 				int idOferta = rs.getInt("idOferta");
@@ -286,7 +282,7 @@ public class Modelo {
 		}
 		desconectar();
 	}
-	
+
 	public void cargaridDemandanteAlta(VistaAltaAsignacion valtasignacion) {
 		String sentencia = "SELECT * FROM demandantes;";
 
@@ -297,7 +293,7 @@ public class Modelo {
 			statement = connection.createStatement();
 			rs = statement.executeQuery(sentencia);
 			valtasignacion.chcDemandante.add("Elegir uno...");
-			
+
 			while (rs.next())
 			{
 				int idDemandante = rs.getInt("idDemandante");
@@ -318,11 +314,11 @@ public class Modelo {
 		}
 		desconectar();
 	}
-	
+
 	public void insertarasignacion(VistaAltaAsignacion valtasignacion){
 		String [] elegir = valtasignacion.chcDemandante.getSelectedItem().split(" ");
 		String [] elegiridOferta = valtasignacion.chcOferta.getSelectedItem().split(" ");
-		
+
 		String idDemandante = elegir[0];
 		String idOferta = elegiridOferta[0];
 
@@ -345,7 +341,7 @@ public class Modelo {
 		}
 		desconectar();
 	}
-	
+
 	public static void desconectar() {
 		try
 		{
@@ -359,7 +355,7 @@ public class Modelo {
 			JOptionPane.showMessageDialog(null, "No se puede cerrar la conexión con la BD", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	/**
 	 * Método por el que se saca la fecha actual
 	 * @return Date in format dd/MM/yyyy
@@ -370,7 +366,7 @@ public class Modelo {
 		String fecha= dateFormat.format(date);
 		return fecha;
 	}
-	
+
 	/**
 	 * Método que cambia la fecha en formato EU al de USA
 	 * @param valtasignacion

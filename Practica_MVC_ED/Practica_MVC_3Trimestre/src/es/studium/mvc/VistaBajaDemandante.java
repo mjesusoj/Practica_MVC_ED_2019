@@ -31,7 +31,6 @@ public class VistaBajaDemandante extends JFrame{
 		pnlBotones.add(btnCancelar);
 		add(pnlChoice, "Center");
 		add(pnlBotones, "South");
-		
 		setSize(300,210);
 		setResizable(false);
 		setLocationRelativeTo(null);

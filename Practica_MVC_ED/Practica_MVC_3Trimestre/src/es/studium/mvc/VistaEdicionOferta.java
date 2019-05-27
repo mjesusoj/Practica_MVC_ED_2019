@@ -2,7 +2,6 @@ package es.studium.mvc;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
@@ -29,8 +28,6 @@ public class VistaEdicionOferta extends JFrame{
 	JButton btnCancelar = new JButton("Cancelar");
 	
 	JPanel pnlSuperior = new JPanel();
-	JPanel pnlCentral = new JPanel();
-	JPanel pnlInferior = new JPanel();
 	
 	VistaEdicionOferta()
 	{

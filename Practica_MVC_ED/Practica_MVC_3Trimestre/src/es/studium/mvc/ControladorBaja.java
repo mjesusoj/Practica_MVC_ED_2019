@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.JOptionPane;
+
 public class ControladorBaja implements WindowListener, ActionListener{
 
 	VistaBajaDemandante vbajademandante = null;
@@ -14,7 +16,7 @@ public class ControladorBaja implements WindowListener, ActionListener{
 	public ControladorBaja(VistaBajaDemandante vbajademandante, Modelo modelo) {
 		this.vbajademandante = vbajademandante;
 		this.modelo = modelo;
-		
+
 		vbajademandante.btnEliminar.addActionListener(this);
 		vbajademandante.btnCancelar.addActionListener(this);
 		vbajademandante.addWindowListener(this);
@@ -23,15 +25,18 @@ public class ControladorBaja implements WindowListener, ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (vbajademandante.btnEliminar.equals(arg0.getSource())) {
-			vbajademandante.setVisible(false);
-			VistaConfirmacionBaja vconfirmarbaja1 = new VistaConfirmacionBaja();
-			vconfirmarbaja = vconfirmarbaja1;
-			
-			// Llamar al método para saber que demandante se ha elegido.
-			modelo.demandanteaeliminar(vbajademandante, vconfirmarbaja);
-			vconfirmarbaja.btnSi.addActionListener(this);
-			vconfirmarbaja.btnNo.addActionListener(this);
-			vconfirmarbaja.addWindowListener(this);
+			if (vbajademandante.chcElegir.getSelectedItem().equals("Elegir uno...")){
+				JOptionPane.showMessageDialog(null, "No se puede escoger ese elemento, escoja otro", "Error", JOptionPane.ERROR_MESSAGE);
+			}else {
+				vbajademandante.setVisible(false);
+				VistaConfirmacionBaja vconfirmarbaja1 = new VistaConfirmacionBaja();
+				vconfirmarbaja = vconfirmarbaja1;
+				// Llamar al método para saber que demandante se ha elegido.
+				modelo.demandanteaeliminar(vbajademandante, vconfirmarbaja);
+				vconfirmarbaja.btnSi.addActionListener(this);
+				vconfirmarbaja.btnNo.addActionListener(this);
+				vconfirmarbaja.addWindowListener(this);
+			}
 		}
 
 		else if (vbajademandante.btnCancelar.equals(arg0.getSource())){
@@ -43,7 +48,7 @@ public class ControladorBaja implements WindowListener, ActionListener{
 		else if (vconfirmarbaja.btnSi.equals(arg0.getSource())) {
 			modelo.eliminarDemandante(vbajademandante, vconfirmarbaja);
 		}
-	
+
 		else if (vconfirmarbaja.btnNo.equals(arg0.getSource())) {
 			vconfirmarbaja.setVisible(false);
 			vbajademandante.setVisible(true);
@@ -63,7 +68,7 @@ public class ControladorBaja implements WindowListener, ActionListener{
 			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
 			new ControladorPrincipal(vmenuprincipal, modelo);
 		}
-			
+
 		else if(vconfirmarbaja.isActive()) {
 			vconfirmarbaja.setVisible(false);
 			vbajademandante.setVisible(true);

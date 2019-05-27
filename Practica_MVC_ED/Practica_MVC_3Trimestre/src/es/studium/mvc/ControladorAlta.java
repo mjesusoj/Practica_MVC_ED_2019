@@ -33,12 +33,6 @@ public class ControladorAlta implements WindowListener, ActionListener{
 	}
 
 	@Override
-	public void windowActivated(WindowEvent e) {}
-
-	@Override
-	public void windowClosed(WindowEvent e) {}
-
-	@Override
 	public void windowClosing(WindowEvent e) {
 		if (valtasignacion.isActive()) {
 			valtasignacion.setVisible(false);
@@ -46,17 +40,11 @@ public class ControladorAlta implements WindowListener, ActionListener{
 			new ControladorPrincipal(vmenuprincipal, modelo);
 		}
 	}
-
-	@Override
+	
+	public void windowActivated(WindowEvent e) {}
+	public void windowClosed(WindowEvent e) {}
 	public void windowDeactivated(WindowEvent e) {}
-
-	@Override
 	public void windowDeiconified(WindowEvent e) {}
-
-	@Override
 	public void windowIconified(WindowEvent e) {}
-
-	@Override
 	public void windowOpened(WindowEvent e) {}
-
 }
