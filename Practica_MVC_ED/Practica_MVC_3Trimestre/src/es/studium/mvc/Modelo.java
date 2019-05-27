@@ -21,6 +21,9 @@ public class Modelo {
 	static Statement statement = null;
 	static ResultSet rs = null;
 	
+	/**
+	 * Método que inserta el Demandante para realizar la baja
+	 */
 	public void insertarDemandanteBaja(VistaBajaDemandante vbajademandante) {
 		String sentencia = "SELECT idDemandante, nombreDemandante, apellidosDemandante, dniDemandante FROM demandantes;";
 		
@@ -51,9 +54,14 @@ public class Modelo {
 		desconectar();
 	}
 	
+	/**
+	 * Se pregunta si se quiere eliminar el demandante 
+	 * @param vbajademandante
+	 * @param vconfirmarbaja
+	 */
 	public void demandanteaeliminar(VistaBajaDemandante vbajademandante, VistaConfirmacionBaja vconfirmarbaja) {
 		if (vbajademandante.chcElegir.getSelectedItem().equals("Elige uno...")) {
-			System.out.println("No puede escoger ese elemento");
+			JOptionPane.showMessageDialog(null, "No se puede escoger ese item", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		String[] demandanteelegido = vbajademandante.chcElegir.getSelectedItem().split(" "+"-"+" ");
@@ -62,6 +70,11 @@ public class Modelo {
 		vconfirmarbaja.eliminarDemandante.setText("¿Seguro/a de eliminar a" + " " + demandante +"?");
 	} 
 	
+	/**
+	 * Se elimina el demandante que se ha escogido anteriormente
+	 * @param vbajademandante
+	 * @param vconfirmarbaja
+	 */
 	public void eliminarDemandante(VistaBajaDemandante vbajademandante, VistaConfirmacionBaja vconfirmarbaja) {
 		try
 		{
@@ -85,6 +98,10 @@ public class Modelo {
 		desconectar();
 	}
 	
+	/**
+	 * Carga la oferta 
+	 * @param vmodoferta
+	 */
 	public void cargarOferta(VistaModificacionOferta vmodoferta) {
 		String sentencia = "SELECT idOferta, DATE_FORMAT(fechaOferta,'%d/%m/%Y') AS 'fechaOferta', "
 				+ "DATE_FORMAT(fechaFinOferta,'%d/%m/%Y') AS 'fechaFinOferta', requisitosOferta FROM ofertas;";
@@ -120,6 +137,11 @@ public class Modelo {
 		desconectar();
 	}
 
+	/**
+	 * Carga los componentes 
+	 * @param vedicionoferta
+	 * @param vmodoferta
+	 */
 	public void cargarcomponentesEdicion(VistaEdicionOferta vedicionoferta, VistaModificacionOferta vmodoferta) {
 		String [] oferta = vmodoferta.chcElegir.getSelectedItem().split("-" + " ");  
 		String [] escoger = vmodoferta.chcElegir.getSelectedItem().split(" ");  
@@ -129,9 +151,18 @@ public class Modelo {
 		vedicionoferta.oferta.setText("Oferta:" + " " + oferta[0]);
 		vedicionoferta.txtFecha.setText(escoger[2]);
 		vedicionoferta.txtFechaFin.setText(fechaFinOferta);
-		vedicionoferta.txtRequisitos.setText(escoger[5]);
+		
+		try {
+			vedicionoferta.txtRequisitos.setText(escoger[5] + " " + escoger[6]);
+		}catch(IndexOutOfBoundsException e) {
+			vedicionoferta.txtRequisitos.setText(escoger[5]);
+		}
 	}
 	
+	/**
+	 * Se realiza la actualización de la Oferta
+	 * @param vedicionoferta
+	 */
 	public static void modificarcamposEdicion(VistaEdicionOferta vedicionoferta) {
 		String[] oferta = vedicionoferta.oferta.getText().split(":" + " ");
 		String idOferta = oferta[1];
@@ -142,9 +173,12 @@ public class Modelo {
 		String[] escogerfechaFinOferta = vedicionoferta.txtFechaFin.getText().split("/");
 		String fechaFinOferta = escogerfechaFinOferta[2] + "-" + escogerfechaFinOferta[1] + "-" + escogerfechaFinOferta[0];
 		
+		String[] escogerequisitosOferta = vedicionoferta.txtRequisitos.getText().split("," + " ");
+		String requisitosOferta = escogerequisitosOferta[0];
+		
 		String sentencia = "UPDATE ofertas SET fechaOferta= '"+fechaOferta+"' , "
 				+ "fechaFinOferta= '"+fechaFinOferta+"', "
-						+ "requisitosOferta= '"+vedicionoferta.txtRequisitos.getText()+"' "
+						+ "requisitosOferta= '"+requisitosOferta+"' "
 								+ "WHERE idOferta = '"+idOferta+"';";
 		
 		try 
@@ -169,6 +203,9 @@ public class Modelo {
 		desconectar();
 	}
 	
+	/**
+	 * Rellena la tabla de ofertas
+	 */
 	public static Object[][] rellenarTabla() {
 		String sentencia = "SELECT idOferta AS 'Oferta', COUNT(idDemandanteFK) AS 'Nº Demandantes Asignados', "
 				+ "DATE_FORMAT(fechaFinOferta,'%d/%m/%Y') AS 'Fecha Fin'\r\n" + 
@@ -323,6 +360,10 @@ public class Modelo {
 		}
 	}
 	
+	/**
+	 * Método por el que se saca la fecha actual
+	 * @return Date in format dd/MM/yyyy
+	 */
 	public static String fechaactual() {
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -330,6 +371,11 @@ public class Modelo {
 		return fecha;
 	}
 	
+	/**
+	 * Método que cambia la fecha en formato EU al de USA
+	 * @param valtasignacion
+	 * @return Date in format AAAA-MM-DD
+	 */
 	public static String fechamericana(VistaAltaAsignacion valtasignacion){
 		String fecha = valtasignacion.txtFecha.getText();
 		String quitarbarra [] = fecha.split("/");
