@@ -7,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class VistaConsultaOferta extends JFrame{
 
@@ -17,18 +16,19 @@ public class VistaConsultaOferta extends JFrame{
 	
 	JButton btnAceptar = new JButton("Aceptar");
 	
-	static DefaultTableModel modelo = new DefaultTableModel();
-	
 	VistaConsultaOferta()
 	{
 		setTitle("Consulta Ofertas");
 		setLayout(new FlowLayout());
+		// Añadir la tabla y pasarle como parámetros el método que coge datos de la BD
 		tabla = new JTable(Modelo.rellenarTabla(), nombreColumnas);
-		tabla.setModel(modelo);
+		// Añadir el modelo de la tabla
+		tabla.setModel(Modelo.modelotabla);
+		// Añadir un Panel de Scroll al centro
 		add(new JScrollPane(tabla), BorderLayout.CENTER);
 		add(btnAceptar);
 		setSize(500,550);
-		setResizable(true);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}

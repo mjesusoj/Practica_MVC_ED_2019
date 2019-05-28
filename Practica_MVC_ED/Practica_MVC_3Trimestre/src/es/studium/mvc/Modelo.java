@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Modelo {
 	static String driver = "com.mysql.jdbc.Driver";
@@ -20,7 +21,9 @@ public class Modelo {
 	static Connection connection = null;
 	static Statement statement = null;
 	static ResultSet rs = null;
-
+	// Se implementa el Modelo que se usa para las JTables, para realizar diferentes operaciones
+	static DefaultTableModel modelotabla = null;
+	
 	/**
 	 * Método que inserta el Demandante para realizar la baja
 	 */
@@ -203,6 +206,8 @@ public class Modelo {
 	 * Rellena la tabla de ofertas
 	 */
 	public static Object[][] rellenarTabla() {
+		modelotabla = new DefaultTableModel();
+		
 		String sentencia = "SELECT idOferta AS 'Oferta', COUNT(idDemandanteFK) AS 'Nº Demandantes Asignados', "
 				+ "DATE_FORMAT(fechaFinOferta,'%d/%m/%Y') AS 'Fecha Fin'\r\n" + 
 				"FROM ofertas, asignaciones\r\n" + 
@@ -223,7 +228,7 @@ public class Modelo {
 			// Bucle para ir de 1 hasta las columnas que existen
 			for (int i=1;i<=cantidadColumnas;i++) {
 				// Añadir los títulos de las columnas
-				VistaConsultaOferta.modelo.addColumn(rsMd.getColumnLabel(i));
+				modelotabla.addColumn(rsMd.getColumnLabel(i));
 			}
 
 			while (rs.next()) {
@@ -233,7 +238,7 @@ public class Modelo {
 					fila[i] = rs.getObject(i+1);
 				}
 				// Añadir las columnas
-				VistaConsultaOferta.modelo.addRow(fila);
+				modelotabla.addRow(fila);
 			}
 		}
 
