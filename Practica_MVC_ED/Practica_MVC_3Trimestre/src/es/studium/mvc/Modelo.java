@@ -23,7 +23,7 @@ public class Modelo {
 	static ResultSet rs = null;
 	// Se implementa el Modelo que se usa para las JTables, para realizar diferentes operaciones
 	static DefaultTableModel modelotabla = null;
-	
+
 	/**
 	 * Método que inserta el Demandante para realizar la baja
 	 */
@@ -83,6 +83,7 @@ public class Modelo {
 			String [] escogerdato = vbajademandante.chcElegir.getSelectedItem().split(" "+"-"+" ");
 			int idDemandante = Integer.parseInt(escogerdato[0]);
 			statement.executeUpdate("DELETE FROM demandantes WHERE idDemandante = '"+idDemandante+"';");
+			JOptionPane.showMessageDialog(null, "Baja realizada correctamente", "Baja Correcta", JOptionPane.WARNING_MESSAGE);
 		}
 
 		catch (ClassNotFoundException cnfe)
@@ -115,6 +116,7 @@ public class Modelo {
 			//Crear un objeto ResultSet para guardar lo obtenido y ejecutar la sentencia SQL
 			rs = statement.executeQuery(sentencia);
 			vmodoferta.chcElegir.add("Elegir uno...");
+
 			while (rs.next())
 			{
 				int idOferta = rs.getInt("idOferta");
@@ -186,6 +188,7 @@ public class Modelo {
 			connection = DriverManager.getConnection(url, login, password);
 			statement = connection.createStatement();						
 			statement.executeUpdate(sentencia);
+			JOptionPane.showMessageDialog(null, "Modificación realizada correctamente", "Modificación Correcta", JOptionPane.INFORMATION_MESSAGE);
 		}
 
 		catch (ClassNotFoundException cnfe)
@@ -207,7 +210,7 @@ public class Modelo {
 	 */
 	public static Object[][] rellenarTabla() {
 		modelotabla = new DefaultTableModel();
-		
+
 		String sentencia = "SELECT idOferta AS 'Oferta', COUNT(idDemandanteFK) AS 'Nº Demandantes Asignados', "
 				+ "DATE_FORMAT(fechaFinOferta,'%d/%m/%Y') AS 'Fecha Fin'\r\n" + 
 				"FROM ofertas, asignaciones\r\n" + 
@@ -334,6 +337,7 @@ public class Modelo {
 			statement = connection.createStatement();
 			// Realizar la actualización
 			statement.executeUpdate("INSERT INTO asignaciones VALUES(NULL, '"+fechamericana(valtasignacion)+"', '"+idOferta+"', '"+idDemandante+"');");
+			JOptionPane.showMessageDialog(null, "Alta realizada correctamente", "Alta Correcta", JOptionPane.INFORMATION_MESSAGE);
 		}
 		catch (ClassNotFoundException cnfe)
 		{
