@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JOptionPane;
+
 public class ControladorModificacion extends WindowAdapter implements ActionListener{
 
 	VistaModificacionOferta vmodoferta = null;
@@ -22,27 +24,32 @@ public class ControladorModificacion extends WindowAdapter implements ActionList
 	@Override
 	public void actionPerformed(ActionEvent ae) {			
 		if(vmodoferta.btnEditar.equals(ae.getSource())) {
-			vmodoferta.setVisible(false);
-			VistaEdicionOferta vedicionoferta1 = new VistaEdicionOferta();
-			vedicionoferta = vedicionoferta1;
+			if (vmodoferta.chcElegir.getSelectedItem().equals("Elegir uno...")) {				
+				JOptionPane.showMessageDialog(null, "No puede escoger ese elemento, ya que es informativo", 
+						"Escoja otro elemento", JOptionPane.INFORMATION_MESSAGE);			
+			}else {
+				vmodoferta.setVisible(false);
+				VistaEdicionOferta vedicionoferta1 = new VistaEdicionOferta();
+				vedicionoferta = vedicionoferta1;
 
-			modelo.cargarcomponentesEdicion(vedicionoferta, vmodoferta);
+				modelo.cargarcomponentesEdicion(vedicionoferta, vmodoferta);
 
-			// Listeners
-			vedicionoferta.btnActualizar.addActionListener(this);
-			vedicionoferta.btnCancelar.addActionListener(this);
-			vedicionoferta.addWindowListener(this);
+				// Listeners
+				vedicionoferta.btnActualizar.addActionListener(this);
+				vedicionoferta.btnCancelar.addActionListener(this);
+				vedicionoferta.addWindowListener(this);
+			}
 		}
 
 		else if(vmodoferta.btnCancelar.equals(ae.getSource())) {
 			VistaMenuPrincipal vmenuprincipal = new VistaMenuPrincipal();
 			new ControladorPrincipal(vmenuprincipal, modelo);
 		}
-		
+
 		else if(vedicionoferta.btnActualizar.equals(ae.getSource())) {
 			Modelo.modificarcamposEdicion(vedicionoferta);
 		}
-		
+
 		else if(vedicionoferta.btnCancelar.equals(ae.getSource())) {
 			vedicionoferta.setVisible(false);
 			vmodoferta.setVisible(true);

@@ -24,6 +24,7 @@ public class VistaConsultaOferta extends JFrame{
 		tabla = new JTable(Modelo.rellenarTabla(), nombreColumnas);
 		// Añadir el modelo de la tabla
 		tabla.setModel(Modelo.modelotabla);
+		tabla.setEnabled(false);
 		// Añadir un Panel de Scroll al centro
 		add(new JScrollPane(tabla), BorderLayout.CENTER);
 		add(btnAceptar);
