@@ -213,7 +213,7 @@ public class Modelo {
 		String sentencia = "SELECT idOfertaFK AS 'Oferta', COUNT(idDemandanteFK) AS 'Nº Demandantes Asignados', "
 				+ "DATE_FORMAT(fechaFinOferta,'%d/%m/%Y') AS 'Fecha Fin'\r\n" + 
 				"FROM ofertas, asignaciones\r\n" + 
-				"WHERE ofertas.idOferta = asignaciones.idDemandanteFK\r\n" + 
+				"WHERE asignaciones.idOfertaFK = ofertas.idOferta\r\n" + 
 				"GROUP BY 1 ORDER BY 1;";
 
 		try 
