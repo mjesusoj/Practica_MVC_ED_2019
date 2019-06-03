@@ -1,31 +1,30 @@
 package es.studium.mvc;
 
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class VistaMenuPrincipal extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 
-	MenuBar barraMenu = new MenuBar();
+	JMenuBar barraMenu = new JMenuBar();
 	
-	Menu menuDemandantes = new Menu("Demandantes");
-	Menu menuOfertas = new Menu("Ofertas");
-	Menu menuGestion = new Menu("Gestión");
+	JMenu menuDemandantes = new JMenu("Demandantes");
+	JMenu menuOfertas = new JMenu("Ofertas");
+	JMenu menuGestion = new JMenu("Gestión");
 	
 	// Submenús
-	MenuItem mniDemandantesBaja = new MenuItem("Baja");
-	MenuItem mniOfertasModificacion = new MenuItem("Modificación");
-	MenuItem mniOfertasConsulta = new MenuItem("Consulta");
-	MenuItem mniGestionAlta = new MenuItem("Alta");
+	JMenuItem mniDemandantesBaja = new JMenuItem("Baja");
+	JMenuItem mniOfertasModificacion = new JMenuItem("Modificación");
+	JMenuItem mniOfertasConsulta = new JMenuItem("Consulta");
+	JMenuItem mniGestionAlta = new JMenuItem("Alta");
 	
 	VistaMenuPrincipal()
 	{
 		setTitle("Práctica MVC");
-		setMenuBar(barraMenu);
+		setJMenuBar(barraMenu);
 		
 		// Añadir los menús
 		barraMenu.add(menuDemandantes);
