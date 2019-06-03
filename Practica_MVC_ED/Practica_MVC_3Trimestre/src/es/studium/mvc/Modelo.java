@@ -83,7 +83,7 @@ public class Modelo {
 			String [] escogerdato = vbajademandante.chcElegir.getSelectedItem().split(" "+"-"+" ");
 			int idDemandante = Integer.parseInt(escogerdato[0]);
 			statement.executeUpdate("DELETE FROM demandantes WHERE idDemandante = '"+idDemandante+"';");
-			JOptionPane.showMessageDialog(null, "Baja realizada correctamente", "Baja Correcta", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Se ha realizado correctamente la baja", "Baja Correcta", JOptionPane.WARNING_MESSAGE);
 		}
 
 		catch (ClassNotFoundException cnfe)
@@ -92,8 +92,8 @@ public class Modelo {
 		}
 		catch (SQLException sqle)
 		{
-			JOptionPane.showMessageDialog(null, "Error al realizar la operación, "
-					+ "considere mirar si el servicio de MYSQL esta activo o algo por el estilo", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error al realizar la baja, "
+					+ "puede ser que el demandante este asignado en otra tabla", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		desconectar();
 	}
@@ -188,7 +188,8 @@ public class Modelo {
 			connection = DriverManager.getConnection(url, login, password);
 			statement = connection.createStatement();						
 			statement.executeUpdate(sentencia);
-			JOptionPane.showMessageDialog(null, "Modificación realizada correctamente", "Modificación Correcta", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Modificación Realiza Correctamente", "Modificación Realizada", JOptionPane.WARNING_MESSAGE);
+
 		}
 
 		catch (ClassNotFoundException cnfe)
@@ -211,11 +212,11 @@ public class Modelo {
 	public static Object[][] rellenarTabla() {
 		modelotabla = new DefaultTableModel();
 
-		String sentencia = "SELECT idOferta AS 'Oferta', COUNT(idDemandanteFK) AS 'Nº Demandantes Asignados', "
+		String sentencia = "SELECT idOfertaFK AS 'Oferta', COUNT(idDemandanteFK) AS 'Nº Demandantes Asignados', "
 				+ "DATE_FORMAT(fechaFinOferta,'%d/%m/%Y') AS 'Fecha Fin'\r\n" + 
 				"FROM ofertas, asignaciones\r\n" + 
-				"WHERE ofertas.idOferta = asignaciones.idDemandanteFK\r\n" + 
-				"ORDER BY 1;";
+				"WHERE asignaciones.idOfertaFK = ofertas.idOferta\r\n" + 
+				"GROUP BY 1 ORDER BY 1;";
 
 		try 
 		{
@@ -337,7 +338,7 @@ public class Modelo {
 			statement = connection.createStatement();
 			// Realizar la actualización
 			statement.executeUpdate("INSERT INTO asignaciones VALUES(NULL, '"+fechamericana(valtasignacion)+"', '"+idOferta+"', '"+idDemandante+"');");
-			JOptionPane.showMessageDialog(null, "Alta realizada correctamente", "Alta Correcta", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "La oferta elegida ha sido asignada al demandante correspondiente", "Alta Correcta", JOptionPane.INFORMATION_MESSAGE);
 		}
 		catch (ClassNotFoundException cnfe)
 		{

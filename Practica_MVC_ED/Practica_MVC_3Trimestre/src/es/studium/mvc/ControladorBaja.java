@@ -55,10 +55,7 @@ public class ControladorBaja implements WindowListener, ActionListener{
 		}
 	}
 
-	@Override
 	public void windowActivated(WindowEvent arg0) {}
-
-	@Override
 	public void windowClosed(WindowEvent arg0) {}
 
 	@Override
@@ -75,15 +72,8 @@ public class ControladorBaja implements WindowListener, ActionListener{
 		}
 	}
 
-	@Override
 	public void windowDeactivated(WindowEvent arg0) {}
-
-	@Override
 	public void windowDeiconified(WindowEvent arg0) {}
-
-	@Override
 	public void windowIconified(WindowEvent arg0) {}
-
-	@Override
 	public void windowOpened(WindowEvent arg0) {}
 }

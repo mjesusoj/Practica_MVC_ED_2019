@@ -25,7 +25,7 @@ public class ControladorModificacion extends WindowAdapter implements ActionList
 	public void actionPerformed(ActionEvent ae) {			
 		if(vmodoferta.btnEditar.equals(ae.getSource())) {
 			if (vmodoferta.chcElegir.getSelectedItem().equals("Elegir uno...")) {
-				JOptionPane.showMessageDialog(null, "No puede escoger ese elemento, ya que es informativo", "Escoja otro elemento", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "No puede escoger ese elemento, ya que es informativo", "Escoja otro elemento", JOptionPane.INFORMATION_MESSAGE);		
 			}else {
 				vmodoferta.setVisible(false);
 				VistaEdicionOferta vedicionoferta1 = new VistaEdicionOferta();
